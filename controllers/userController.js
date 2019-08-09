@@ -7,6 +7,11 @@
 exports.login = ()=>{
 
 }
+
+exports.register = (req, res) => {
+    res.send("thanks")
+
+}
 exports.logout = () => {
 
 }
