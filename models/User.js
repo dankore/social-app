@@ -45,6 +45,7 @@ User.prototype.login = function() {
           attmptedUser &&
           bcrypt.compareSync(this.data.password, attmptedUser.password)
         ) {
+          this.getAvatar();
           resolve("Congrats!!");
         } else {
           reject("Invalid username/password.");
@@ -131,6 +132,7 @@ User.prototype.register = function() {
       let salt = bcrypt.genSaltSync(10);
       this.data.password = bcrypt.hashSync(this.data.password, salt);
       await usersCollection.insertOne(this.data);
+      this.getAvatar();
       resolve();
     } else {
       reject(this.errors);
@@ -138,7 +140,7 @@ User.prototype.register = function() {
   });
 };
 
-User.prototype.getAvatar = () => {
+User.prototype.getAvatar = function() {
   this.avatar = `http://gravatar.com/avatar/${md5(this.data.email)}?s=123`;
 };
 
