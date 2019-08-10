@@ -22,16 +22,16 @@ User.prototype.cleanUp = function () {
     }
 }
 
-User.prototype.login = function () {
+User.prototype.login = function (callback) {
     // Check to make sure it is a string
     //The arrow function keeps the value of the 'this' keyword
     this.cleanUp();
     usersCollection.findOne({ username: this.data.username }, (err, attmptedUser) => {
         if (attmptedUser && attmptedUser.password == this.data.password) {
-            console.log('congrats')
+            callback("Congrats")
 
         } else {
-            console.log("Invalid username/password")
+            callback("Invalid username.password")
 
         }
     })
