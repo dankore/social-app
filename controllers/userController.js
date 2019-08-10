@@ -7,15 +7,19 @@
 // Import User Model
 const User = require('../models/User')
 
-exports.login = ()=>{
+exports.login = () => {
 
 }
 
 exports.register = (req, res) => {
     let user = new User(req.body)
     user.register();
-    
-    res.send("thanks")
+
+    if (user.errors.length) {
+        res.send(user.errors)
+    } else {
+        res.send("Congrats there no errors")
+    }
 
 }
 exports.logout = () => {
