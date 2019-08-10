@@ -21,6 +21,21 @@ User.prototype.cleanUp = function () {
         password: this.data.password
     }
 }
+
+User.prototype.login = function () {
+    // Check to make sure it is a string
+    //The arrow function keeps the value of the 'this' keyword
+    this.cleanUp();
+    usersCollection.findOne({ username: this.data.username }, (err, attmptedUser) => {
+        if (attmptedUser && attmptedUser.password == this.data.password) {
+            console.log('congrats')
+
+        } else {
+            console.log("Invalid username/password")
+
+        }
+    })
+}
 User.prototype.validate = function () {
     if (this.data.username == "") { this.errors.push("You must provide a username.") }
     if (this.data.username != "" && !validator.isAlphanumeric(this.data.username)) { this.errors.push("Username can only contain letters and numbers") }

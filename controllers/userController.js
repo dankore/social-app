@@ -7,8 +7,11 @@
 // Import User Model
 const User = require('../models/User')
 
-exports.login = () => {
-
+exports.login = (req, res) => {
+    //Create an instance of User object 
+    // And look into the body of the form => req.body for submissions
+    let user = new User(req.body)
+    user.login()
 }
 
 exports.register = (req, res) => {
