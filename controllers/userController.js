@@ -4,11 +4,14 @@
 //     logout: () => { }
 // }
 
+const User = require('../models/User')
+
 exports.login = ()=>{
 
 }
 
 exports.register = (req, res) => {
+    console.log(req.body)
     res.send("thanks")
 
 }
