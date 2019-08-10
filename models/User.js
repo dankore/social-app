@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const validator = require("validator")
 
-const usersCollection = require('../db').collection("users")
+const usersCollection = require('../db').db().collection("users")
 
 //This is a constructor function
 // Throws error if in arrow function
