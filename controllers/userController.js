@@ -13,6 +13,7 @@ exports.login = ()=>{
 
 exports.register = (req, res) => {
     let user = new User(req.body)
+    user.register();
     
     res.send("thanks")
 
