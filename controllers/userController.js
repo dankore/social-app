@@ -15,7 +15,9 @@ exports.login = (req, res) => {
     .login()
     .then(result => {
       req.session.user = { favColor: "red", username: user.data.username };
-      res.send(result);
+      req.session.save(()=>{
+          res.redirect('/')
+      })
     })
     .catch(error => {
       res.send(error);
@@ -33,13 +35,14 @@ exports.register = (req, res) => {
   }
 };
 exports.logout = (req, res) => {
-    req.session.destroy()
-    res.send('You are logged out!')
+  req.session.destroy(() => {
+    res.redirect("/");
+  });
 };
 
 exports.home = (req, res) => {
   if (req.session.user) {
-    res.render('home-dashboard', {username: req.session.user.username})
+    res.render("home-dashboard", { username: req.session.user.username });
   } else {
     res.render("home-guest");
   }
