@@ -4,6 +4,7 @@
 //     logout: () => { }
 // }
 
+// Import User Model
 const User = require('../models/User')
 
 exports.login = ()=>{
@@ -11,7 +12,8 @@ exports.login = ()=>{
 }
 
 exports.register = (req, res) => {
-    console.log(req.body)
+    let user = new User(req.body)
+    
     res.send("thanks")
 
 }
