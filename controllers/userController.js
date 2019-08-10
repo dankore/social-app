@@ -12,6 +12,7 @@ exports.login = (req, res) => {
     // And look into the body of the form => req.body for submissions
     let user = new User(req.body)
     user.login().then((result) => {
+        req.session.user = { favColor: "red", username: user.data.username }
         res.send(result)
     }).catch((error) => {
         res.send(error)
@@ -33,5 +34,9 @@ exports.logout = () => {
 
 }
 exports.home = (req, res) => {
-    res.render('home-guest')
+    if (req.session.user) {
+        res.send("Welcome to the actual app!")
+    } else {
+        res.render('home-guest')
+    }
 }

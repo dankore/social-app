@@ -1,5 +1,5 @@
 const express = require('express')
-const session = requie('express-session')
+const session = require('express-session')
 const app = express()
 
 let sessionOptions = session({
