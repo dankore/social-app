@@ -13,6 +13,7 @@
   "dependencies": {
     "ejs": "^2.6.2",
     "express": "^4.17.1",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "validator": "^11.1.0"
   }
 }

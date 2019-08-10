@@ -1,3 +1,5 @@
+const validaor = require("validator")
+
 //This is a constructor function
 // Throws error if in arrow function
 let User = function (data) {
