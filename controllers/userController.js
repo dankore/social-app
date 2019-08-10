@@ -11,8 +11,10 @@ exports.login = (req, res) => {
     //Create an instance of User object 
     // And look into the body of the form => req.body for submissions
     let user = new User(req.body)
-    user.login((result) => {
+    user.login().then((result) => {
         res.send(result)
+    }).catch((err) => {
+        res.send(err)
     })
 }
 

@@ -22,18 +22,21 @@ User.prototype.cleanUp = function () {
     }
 }
 
-User.prototype.login = function (callback) {
+User.prototype.login = function () {
     // Check to make sure it is a string
     //The arrow function keeps the value of the 'this' keyword
-    this.cleanUp();
-    usersCollection.findOne({ username: this.data.username }, (err, attmptedUser) => {
-        if (attmptedUser && attmptedUser.password == this.data.password) {
-            callback("Congrats")
+    // Traditonal function(){} manipulates the 'this' keyword
+    return new Promise((resolve, reject) => {
+        this.cleanUp();
+        usersCollection.findOne({ username: this.data.username }, (err, attmptedUser) => {
+            if (attmptedUser && attmptedUser.password == this.data.password) {
+                resolve("Congrats")
 
-        } else {
-            callback("Invalid username.password")
+            } else {
+                reject("Invalid username.password")
 
-        }
+            }
+        })
     })
 }
 User.prototype.validate = function () {
