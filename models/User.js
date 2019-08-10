@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
+const md5 = require("md5");
 
 const usersCollection = require("../db")
   .db()
@@ -135,6 +136,10 @@ User.prototype.register = function() {
       reject(this.errors);
     }
   });
+};
+
+User.prototype.getAvatar = () => {
+  this.avatar = `http://gravatar.com/avatar/email/email?s=123`;
 };
 
 module.exports = User;
