@@ -45,6 +45,7 @@ User.prototype.login = function() {
           attmptedUser &&
           bcrypt.compareSync(this.data.password, attmptedUser.password)
         ) {
+          this.data = attmptedUser;
           this.getAvatar();
           resolve("Congrats!!");
         } else {
