@@ -139,7 +139,7 @@ User.prototype.register = function() {
 };
 
 User.prototype.getAvatar = () => {
-  this.avatar = `http://gravatar.com/avatar/email/email?s=123`;
+  this.avatar = `http://gravatar.com/avatar/${md5(this.data.email)}?s=123`;
 };
 
 module.exports = User;
