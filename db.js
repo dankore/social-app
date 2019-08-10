@@ -7,6 +7,6 @@ mongodb.connect(process.env.CONNECTIONSTRING, { useNewUrlParser: true }, (err, c
     // Return db object
     module.exports = client.db()
     const app = require('./app')
-    app.listen(3000)
+    app.listen(process.env.PORT)
 
 })
