@@ -32,8 +32,9 @@ exports.register = (req, res) => {
     res.send("Congrats there no errors");
   }
 };
-exports.logout = () => {
-    
+exports.logout = (req, res) => {
+    req.session.destroy()
+    res.send('You are logged out!')
 };
 
 exports.home = (req, res) => {
