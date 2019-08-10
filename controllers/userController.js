@@ -33,9 +33,10 @@ exports.register = (req, res) => {
   }
 };
 exports.logout = () => {};
+
 exports.home = (req, res) => {
   if (req.session.user) {
-    res.send("Welcome to the actual app!");
+    res.render('home-dashboard', {username: req.session.user.username})
   } else {
     res.render("home-guest");
   }
