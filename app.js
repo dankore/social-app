@@ -3,6 +3,9 @@ const app = express()
 
 const router = require('./router')
 
+// Add user submit input to body of request
+app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
 
 // Make this app find files for the public eyes - e.g css
 app.use(express.static('public'))
