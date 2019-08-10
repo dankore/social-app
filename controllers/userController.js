@@ -22,9 +22,9 @@ exports.login = (req, res) => {
     .catch(error => {
       // Flash is accessing this => req.session.flash.errors = [errors]
       req.flash("errors", error);
-      req.session.save(()=>{
-          res.redirect('/')
-      })
+      req.session.save(() => {
+        res.redirect("/");
+      });
     });
 };
 
@@ -33,7 +33,12 @@ exports.register = (req, res) => {
   user.register();
 
   if (user.errors.length) {
-    res.send(user.errors);
+    user.errors.forEach(error => {
+      req.flash("regErrors", error);
+    });
+    req.session.save(() => {
+      res.redirect("/");
+    });
   } else {
     res.send("Congrats there no errors");
   }
@@ -48,6 +53,9 @@ exports.home = (req, res) => {
   if (req.session.user) {
     res.render("home-dashboard", { username: req.session.user.username });
   } else {
-    res.render("home-guest", {errors: req.flash('errors')});
+    res.render("home-guest", {
+      errors: req.flash("errors"),
+      regErrors: req.flash("regErrors")
+    });
   }
 };
