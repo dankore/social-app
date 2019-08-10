@@ -28,15 +28,16 @@ User.prototype.login = function () {
     // Traditonal function(){} manipulates the 'this' keyword
     return new Promise((resolve, reject) => {
         this.cleanUp();
-        usersCollection.findOne({ username: this.data.username }, (err, attmptedUser) => {
+        usersCollection.findOne({ username: this.data.username }).then((attmptedUser) => {
             if (attmptedUser && attmptedUser.password == this.data.password) {
                 resolve("Congrats")
 
             } else {
-                reject("Invalid username.password")
-
+                reject("Invalid username/password")
             }
-        })
+        }).catch(() => {
+            reject('Please try again later.')
+        });
     })
 }
 User.prototype.validate = function () {
