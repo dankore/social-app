@@ -1,5 +1,7 @@
 const validator = require("validator")
 
+const usersCollection = require('../db').collections("users")
+
 //This is a constructor function
 // Throws error if in arrow function
 let User = function (data) {
@@ -41,6 +43,7 @@ User.prototype.register = function () {
 
     // Step #2: Only if there no validation error
     // then save the user data into the database
+
 }
 
 module.exports = User
