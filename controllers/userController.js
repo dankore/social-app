@@ -15,12 +15,16 @@ exports.login = (req, res) => {
     .login()
     .then(result => {
       req.session.user = { favColor: "red", username: user.data.username };
+      req.session.save(() => {
+        res.redirect("/");
+      });
+    })
+    .catch(error => {
+      // Flash is accessing this => req.session.flash.errors = [errors]
+      req.flash("errors", error);
       req.session.save(()=>{
           res.redirect('/')
       })
-    })
-    .catch(error => {
-      res.send(error);
     });
 };
 
@@ -44,6 +48,6 @@ exports.home = (req, res) => {
   if (req.session.user) {
     res.render("home-dashboard", { username: req.session.user.username });
   } else {
-    res.render("home-guest");
+    res.render("home-guest", {errors: req.flash('errors')});
   }
 };
