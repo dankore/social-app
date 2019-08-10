@@ -1,6 +1,6 @@
 const validator = require("validator")
 
-const usersCollection = require('../db').collections("users")
+const usersCollection = require('../db').collection("users")
 
 //This is a constructor function
 // Throws error if in arrow function
@@ -43,6 +43,9 @@ User.prototype.register = function () {
 
     // Step #2: Only if there no validation error
     // then save the user data into the database
+    if (!this.errors.length) {
+        usersCollection.insertOne(this.data)
+    }
 
 }
 
