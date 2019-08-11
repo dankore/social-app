@@ -1,6 +1,9 @@
+// Constructor function
 let Post = data => {
   this.data = data;
+  this.errors = []
 };
+
 Post.prototype.cleanUp = () => {
   if (typeof this.data.title != "string") {
     this.data.title = "";
@@ -16,7 +19,14 @@ Post.prototype.cleanUp = () => {
     };
   }
 };
-Post.prototype.validate = () => {};
+Post.prototype.validate = () => {
+    if(this.data.title == ""){
+        this.errors.push("You must provide a title")        
+    }
+     if (this.data.body == "") {
+       this.errors.push("You must provide a post content");
+     }
+};
 Post.prototype.create = () => {};
 
 module.exports = Post;
