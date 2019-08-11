@@ -1,4 +1,6 @@
-const postsCollection = require("../db").db().collection("posts");
+const postsCollection = require("../db")
+  .db()
+  .collection("posts");
 const ObjectID = require("mongodb").ObjectID;
 
 let Post = function(data, userid) {
@@ -54,4 +56,18 @@ Post.prototype.create = function() {
   });
 };
 
+Post.findSingleById = function(id) {
+  return new Promise(async (resolve, reject) => {
+    if (typeof id != "string" || !ObjectID.isValid(id)) {
+      reject();
+      return;
+    }
+    let post = await postsCollection.findOne({ _id: new ObjectID(id) });
+    if (post) {
+      resolve(post);
+    } else {
+      reject();
+    }
+  });
+};
 module.exports = Post;
