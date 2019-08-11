@@ -22,6 +22,7 @@ exports.viewSingle = async (req, res) => {
     let post = await Post.findSingleById(req.params.id);
     res.render("single-post-screen", { post: post });
   } catch {
-    res.render('404');
+    res.render("404");
   }
 };
+

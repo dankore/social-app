@@ -75,3 +75,12 @@ exports.home = (req, res) => {
     });
   }
 };
+
+exports.ifUserExists = (req, res, next) => {
+  next();
+};
+
+exports.profilePostsScreen = (req, res) => {
+  res.render("profile");
+};
+
