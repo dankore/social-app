@@ -95,5 +95,8 @@ exports.ifUserExists = (req, res, next) => {
 };
 
 exports.profilePostsScreen = (req, res) => {
-  res.render("profile");
+  res.render("profile", {
+    profileUsername: req.profileUser.username,
+    profileAvatar: req.profileUser.avatar
+  });
 };

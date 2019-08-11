@@ -162,7 +162,7 @@ User.findByUserName = (username)=>{
         userDoc = new User(userDoc, true)
         userDoc = {
           _id: userDoc.data._id,
-          username: userDoc.username,
+          username: userDoc.data.username,
           avatar: userDoc.avatar
         }
         resolve(userDoc)
