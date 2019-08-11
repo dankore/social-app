@@ -27,6 +27,17 @@ Post.prototype.validate = () => {
        this.errors.push("You must provide a post content");
      }
 };
-Post.prototype.create = () => {};
+Post.prototype.create = () => {
+    return new Promise((resolve, reject)=>{
+        this.cleanUp()
+        this.validate()
+        if(!this.errors.length){
+            // save post into db
+            
+        } else {
+            reject('this.errors')
+        }
+    })
+};
 
 module.exports = Post;
