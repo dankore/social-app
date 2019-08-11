@@ -8,9 +8,15 @@ const usersCollection = require("../db")
 
 //This is a constructor function
 // Throws error if in arrow function
-let User = function(data) {
+let User = function(data, getAvatar) {
   this.data = data;
   this.errors = [];
+  if (getAvatar == undefined) {
+    getAvatar = false;
+  }
+  if (getAvatar) {
+    this.getAvatar;
+  }
 };
 
 User.prototype.cleanUp = function() {
