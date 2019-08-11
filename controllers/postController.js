@@ -1,17 +1,17 @@
-const Post = require('../models/Post')
+const Post = require("../models/Post");
 
-exports.viewCreateScreen = (req, res) => {
+exports.viewCreateScreen = function(req, res) {
   res.render("create-post");
 };
+exports.create = (req, res) => {
+  let post = new Post(req.body);
 
-exports.create((req, res)=>{
-    let post = new Post(req.body)
-    post.create().then(()=>{
-        res.send("New post created")
-
-    }).catch((errors)=>{
-        res.send(errors)
-
+  post
+    .create()
+    .then(() => {
+      res.send("New post created.");
     })
-    
-})
+    .catch(errors => {
+      res.send(errors);
+    });
+};
