@@ -5,5 +5,13 @@ exports.viewCreateScreen = (req, res) => {
 };
 
 exports.create((req, res)=>{
+    let post = new Post(req.body)
+    post.create().then(()=>{
+        res.send("New post created")
+
+    }).catch((errors)=>{
+        res.send(errors)
+
+    })
     
 })
