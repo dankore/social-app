@@ -1,3 +1,7 @@
+// Import User Model
+const User = require("../models/User");
+const Post = require("../models/Post");
+
 //Below is an alternative access
 // module.exports = {
 //     login: ()=>{},
@@ -14,9 +18,6 @@ exports.mustBeLoggedIn = (req, res, next) => {
     });
   }
 };
-
-// Import User Model
-const User = require("../models/User");
 
 exports.login = (req, res) => {
   //Create an instance of User object
@@ -95,8 +96,16 @@ exports.ifUserExists = (req, res, next) => {
 };
 
 exports.profilePostsScreen = (req, res) => {
-  res.render("profile", {
-    profileUsername: req.profileUser.username,
-    profileAvatar: req.profileUser.avatar
-  });
+  // Ask our post model for posts by a certain author id
+  Post.findByAuthorId(req.profileUser._id)
+    .then(posts => {
+      res.render("profile", {
+        posts: posts,
+        profileUsername: req.profileUser.username,
+        profileAvatar: req.profileUser.avatar
+      });
+    })
+    .catch(() => {
+      res.render("404");
+    });
 };
