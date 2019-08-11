@@ -16,12 +16,19 @@ let sessionOptions = session({
 });
 
 app.use(sessionOptions);
-app.use(flash())
+app.use(flash());
 
-app.use((req, res, next)=>{
-  res.locals.user = req.session.user
-  next()
-})
+app.use((req, res, next) => {
+  // Make current user id avaiavle on the req object
+  if (req.session.user) {
+    req.visitorId = req.session.user._id;
+  } else {
+    req.visitorId = 0;
+  }
+  // Make suer session data from within view template
+  res.locals.user = req.session.user;
+  next();
+});
 
 const router = require("./router");
 
