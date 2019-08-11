@@ -1,3 +1,5 @@
+const postsCollections = require('../db').collection('posts')
+
 // Constructor function
 let Post = data => {
   this.data = data;
@@ -33,7 +35,7 @@ Post.prototype.create = () => {
         this.validate()
         if(!this.errors.length){
             // save post into db
-            
+
         } else {
             reject('this.errors')
         }
