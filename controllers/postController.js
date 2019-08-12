@@ -26,43 +26,48 @@ exports.viewSingle = async (req, res) => {
   }
 };
 
-
-    exports.viewEditScreen = async (req, res) => {
-      try {
-        let post = await Post.findSingleById(req.params.id);
-        res.render("edit-post", { post: post });
-
-      } catch {
-        res.render('404')
-      }
-    };
-
-    exports.edit = (req, res)=>{
-      let post = new Post(req.body, req.visitorId, req.params.id)
-      post.update().then((status)=>{
-        // The post was successfully updated in the database
-        // or user did have permission, but there were validation errors
-        if(status == "success"){
-          // Post was udated in db
-          req.flash("success", "Post successfully updated.")
-          req.session.save(()=>{
-            res.redirect(`/post/${req.params.id}/edit`)
-          })
-
-        } else {
-          post.errors.forEach((error)=>{
-            req.flash("errors", error)
-          })
-          req.session.save(()=>{
-            res.redirect(`/post/${req.params.id}/edit`)
-          })
-        }
-      }).catch(()=>{
-        // If a post with the requested does not exist
-        // Or if the current visitor is not the owner of the requested post
-        req.flash("errors", "You do not have permission to perform that action")
-        req.session.save(()=>{
-          res.redirect('/')
-        })
-      })
+exports.viewEditScreen = async (req, res) => {
+  try {
+    let post = await Post.findSingleById(req.params.id);
+    if (post.authorId == req.visitorId) {
+      res.render("edit-post", { post: post });
+    } else {
+      req.flash("errors", "You do not have permission to perform that action");
+      req.session.save(() => res.redirect("/"));
     }
+  } catch {
+    res.render("404");
+  }
+};
+
+exports.edit = (req, res) => {
+  let post = new Post(req.body, req.visitorId, req.params.id);
+  post
+    .update()
+    .then(status => {
+      // The post was successfully updated in the database
+      // or user did have permission, but there were validation errors
+      if (status == "success") {
+        // Post was udated in db
+        req.flash("success", "Post successfully updated.");
+        req.session.save(() => {
+          res.redirect(`/post/${req.params.id}/edit`);
+        });
+      } else {
+        post.errors.forEach(error => {
+          req.flash("errors", error);
+        });
+        req.session.save(() => {
+          res.redirect(`/post/${req.params.id}/edit`);
+        });
+      }
+    })
+    .catch(() => {
+      // If a post with the requested does not exist
+      // Or if the current visitor is not the owner of the requested post
+      req.flash("errors", "You do not have permission to perform that action");
+      req.session.save(() => {
+        res.redirect("/");
+      });
+    });
+};
