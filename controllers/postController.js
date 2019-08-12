@@ -9,11 +9,13 @@ exports.create = (req, res) => {
 
   post
     .create()
-    .then(() => {
-      res.send("New post created.");
+    .then(newId => {
+      req.flash("success", "New post successfully created.");
+      req.session.save(() => res.redirect(`/post/${newId}`));
     })
     .catch(errors => {
-      res.send(errors);
+      errors.forEach(error => req.flash("errors", error));
+      req.session.save(() => res.redirect("/create-post"));
     });
 };
 

@@ -45,8 +45,8 @@ Post.prototype.create = function() {
       // save post into database
       postsCollection
         .insertOne(this.data)
-        .then(() => {
-          resolve();
+        .then(info => {
+          resolve(info.ops[0]._id);
         })
         .catch(() => {
           this.errors.push("Please try again later.");
@@ -64,7 +64,7 @@ Post.prototype.update = function() {
       let post = await Post.findSingleById(this.requestedPostId, this.userid);
       if (post.isVisitorOwner) {
         // Update db
-        let status  = await this.actuallyUpdate();
+        let status = await this.actuallyUpdate();
         resolve(status);
       } else {
         reject();
@@ -84,9 +84,9 @@ Post.prototype.actuallyUpdate = function() {
         { _id: new ObjectID(this.requestedPostId) },
         { $set: { title: this.data.title, body: this.data.body } }
       );
-      resolve("success")
+      resolve("success");
     } else {
-      resolve("failure")
+      resolve("failure");
     }
   });
 };
