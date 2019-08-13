@@ -127,7 +127,7 @@ exports.profilePostsScreen = (req, res) => {
     });
 };
 
-exports.profileFollowersScreen = async function() {
+exports.profileFollowersScreen = async function(req, res) {
   try {
     let followers = await Follow.getFollowersById(req.profileUser._id);
     res.render("profile-followers", {
