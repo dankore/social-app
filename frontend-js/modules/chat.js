@@ -24,8 +24,8 @@ export default class Chat {
     this.openedYet = true;
     this.chatWrapper.classList.add("chat--visible");
   }
-  openConnection(){
-      alert("Opening a connection!")
+  openConnection() {
+    this.socket = io();
   }
   injectHTML() {
     this.chatWrapper.innerHTML = `

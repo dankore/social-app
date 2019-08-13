@@ -23,7 +23,26 @@ app.use(flash());
 app.use((req, res, next) => {
   // Make our markdown function available from within ejs templates
   res.locals.filterUserHTML = function(content) {
-    return sanitizeHTML(markdown(content), {allowedTags: ['p', 'br', 'ul', 'ol', 'li', 'strong', 'bold', 'i', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'], allowedAttributes: {}});
+    return sanitizeHTML(markdown(content), {
+      allowedTags: [
+        "p",
+        "br",
+        "ul",
+        "ol",
+        "li",
+        "strong",
+        "bold",
+        "i",
+        "em",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6"
+      ],
+      allowedAttributes: {}
+    });
   };
   // Make all error and success flash messsages available from all templates
   res.locals.errors = req.flash("errors");
@@ -52,4 +71,12 @@ app.set("views", "views-html"); // First arg must be views
 app.set("view engine", "ejs");
 
 app.use("/", router);
-module.exports = app;
+
+const server = require("http").createServer(app);
+
+const io = require("socket.io")(server);
+io.on("connection", () => {
+  console.log("new user connected!!");
+});
+
+module.exports = server;
