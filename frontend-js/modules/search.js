@@ -6,11 +6,14 @@ export default class Search {
     this.overlay = document.querySelector(".search-overlay");
     this.closeIcon = document.querySelector(".close-live-search");
     this.inputField = document.querySelector("#live-search-field");
+    this.resultArea = document.querySelector(".live-search-result");
+    this.loaderIcon = document.querySelector(".circle-loader");
     this.events();
   }
 
   // 2. Events
   events() {
+    this.inputField.addEventListener("keyup", () => this.keyPressHandler());
     this.closeIcon.addEventListener("click", () => this.closeOverlay());
     this.headerSearchIcon.addEventListener("click", e => {
       e.preventDefault();
@@ -19,6 +22,12 @@ export default class Search {
   }
 
   // 3. Methods
+  keyPressHandler() {
+    this.showLoadericon();
+  }
+  showLoadericon() {
+    this.loaderIcon.classList.add("circle-loader--visible");
+  }
   openOverlay() {
     this.overlay.classList.add("search-overlay--visible");
     // settimeout to give other browsers time to respond
@@ -42,7 +51,7 @@ export default class Search {
     <div class="search-overlay-bottom">
       <div class="container container--narrow py-3">
         <div class="circle-loader"></div>
-        <div class="live-search-results live-search-results--visible">
+        <div class="live-search-results">
           <div class="list-group shadow-sm">
             <div class="list-group-item active"><strong>Search Results</strong> (4 items found)</div>
 
