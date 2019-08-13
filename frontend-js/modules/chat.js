@@ -39,6 +39,9 @@ export default class Chat {
   }
   openConnection() {
     this.socket = io();
+    this.socket.on("chatMessageFromServer", data => {
+      alert(data.message);
+    });
   }
   injectHTML() {
     this.chatWrapper.innerHTML = `
