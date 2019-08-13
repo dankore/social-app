@@ -85,9 +85,14 @@ io.on("connection", socket => {
     let user = socket.request.session.user;
 
     socket.emit("welcome", { username: user.username, avatar: user.avatar });
+
     socket.on("chatMessageFromBrowser", data => {
+      // Braodcast to all
       socket.broadcast.emit("chatMessageFromServer", {
-        message: data.message,
+        message: sanitizeHTML(data.message, {
+          allowedTags: [],
+          allowedAttributes: {}
+        }),
         username: user.username,
         avatar: user.avatar
       });
