@@ -37,9 +37,14 @@ export default class Search {
   }
 
   sendRequest() {
-    axios.post("/search", { searchTerm: this.injectHTML.value }).then(()=>{}).catch(()=>{
-        alert('Hello the request failed.')
-    });
+    axios
+      .post("/search", { searchTerm: this.inputField.value })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(() => {
+        alert("Hello the request failed.");
+      });
   }
   showLoadericon() {
     this.loaderIcon.classList.add("circle-loader--visible");
