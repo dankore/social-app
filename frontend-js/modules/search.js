@@ -34,14 +34,12 @@ export default class Search {
       this.hideLoaderIcon();
       this.hideResultsArea();
     }
-
     if (value != "" && value != this.previousValue) {
       clearTimeout(this.typingWaitTimer);
       this.showLoaderIcon();
       this.hideResultsArea();
       this.typingWaitTimer = setTimeout(() => this.sendRequest(), 750);
     }
-
     this.previousValue = value;
   }
 
@@ -50,14 +48,13 @@ export default class Search {
       .post("/search", { searchTerm: this.inputField.value })
       .then(response => {
         console.log(response.data);
-        this.renderResultsHTML(response.data);
+        this.renderResultHTML(response.data);
       })
       .catch(() => {
-        alert("Hello, the request failed.");
+        alert("Hello the request failed.");
       });
   }
-
-  renderResultsHTML(posts) {
+  renderResultHTML(posts) {
     if (posts.length) {
       this.resultsArea.innerHTML = `<div class="list-group shadow-sm">
       <div class="list-group-item active"><strong>Search Results</strong> (${
@@ -74,43 +71,37 @@ export default class Search {
           }</strong>
         <span class="text-muted small">by ${
           post.author.username
-        } on ${postDate.getMonth()}/${postDate.getDate()}/${postDate.getFullYear()}</span>
+        } on ${postDate.getMonth() + 1 }/${postDate.getDate()}/${postDate.getFullYear()}</span>
       </a>`;
         })
         .join("")}
     </div>`;
     } else {
-      this.resultsArea.innerHTML = `<p class="alert alert-danger text-center shadow-sm">Sorry, we could not find any results for that search.</p>`;
+      this.resultsArea.innerHTML = `<p class="alert alert-danger text-center shadow-sm">Sorry, we could not find any results for that search</p>`;
     }
     this.hideLoaderIcon();
     this.showResultsArea();
   }
-
   showLoaderIcon() {
     this.loaderIcon.classList.add("circle-loader--visible");
   }
-
   hideLoaderIcon() {
     this.loaderIcon.classList.remove("circle-loader--visible");
   }
-
   showResultsArea() {
     this.resultsArea.classList.add("live-search-results--visible");
   }
-
   hideResultsArea() {
     this.resultsArea.classList.remove("live-search-results--visible");
   }
-
   openOverlay() {
     this.overlay.classList.add("search-overlay--visible");
+    // settimeout to give other browsers time to respond
     setTimeout(() => this.inputField.focus(), 50);
   }
-
   closeOverlay() {
     this.overlay.classList.remove("search-overlay--visible");
   }
-
   injectHTML() {
     document.body.insertAdjacentHTML(
       "beforeend",
