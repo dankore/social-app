@@ -13,10 +13,10 @@ let Follow = function(followedUsername, authorId) {
   this.errors = [];
 };
 Follow.prototype.cleanUp = function() {
-    if (typeof this.followedUsername != "string") {
-      this.followedUsername = "";
-    }
-  };
+  if (typeof this.followedUsername != "string") {
+    this.followedUsername = "";
+  }
+};
 Follow.prototype.validate = async function() {
   // Followed username must exist in db
   let followedAccount = await usersCollection.findOne({
@@ -43,5 +43,17 @@ Follow.prototype.create = function() {
       reject(this.errors);
     }
   });
+};
+
+Follow.isVisitorFollowing = async (followedId, visitorId) => {
+  let followDoc = await followedCollection.findOne({
+    followedId: followedId,
+    authorId: new ObjectID(visitorId)
+  });
+  if (followDoc) {
+    return true;
+  } else {
+    return false;
+  }
 };
 module.exports = Follow;

@@ -15,6 +15,7 @@ router.post("/logout", userController.logout);
 router.get(
   "/profile/:username",
   userController.ifUserExists,
+  userController.sharedProfileData,
   userController.profilePostsScreen
 );
 
@@ -48,7 +49,11 @@ router.post(
 router.post("/search", postController.search);
 
 // Follow related routes
-router.post('/addFollow/:username', userController.mustBeLoggedIn, followController.addFollow)
+router.post(
+  "/addFollow/:username",
+  userController.mustBeLoggedIn,
+  followController.addFollow
+);
 
 //Export router
 module.exports = router;
