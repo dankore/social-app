@@ -8,6 +8,8 @@ export default class Search {
     this.inputField = document.querySelector("#live-search-field");
     this.resultArea = document.querySelector(".live-search-result");
     this.loaderIcon = document.querySelector(".circle-loader");
+    this.typingWaitTimer;
+    this.previousValue = "";
     this.events();
   }
 
@@ -23,7 +25,17 @@ export default class Search {
 
   // 3. Methods
   keyPressHandler() {
-    this.showLoadericon();
+    let value = this.inputField.value;
+    if (value != "" && value != this.previousValue) {
+      clearTimeout(this.typingWaitTimer);
+      this.showLoadericon();
+      this.typingWaitTimer = setTimeout(() => this.sendRequest(), 3000);
+    }
+    this.previousValue = value;
+  }
+
+  sendRequest(){
+      alert("Send request method  jusr ran")
   }
   showLoadericon() {
     this.loaderIcon.classList.add("circle-loader--visible");
