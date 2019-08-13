@@ -8,5 +8,10 @@ exports.addFollow = (req, res) => {
       req.flash("success", `Successfully followed ${req.params.username}`);
       req.session.save(() => res.redirect(`/profile/${req.params.username}`));
     })
-    .catch(() => {});
+    .catch(errors => {
+      errors.forEach(() => {
+        req.flash("errors", error);
+      });
+      req.session.save(() => res.redirect("/"));
+    });
 };
