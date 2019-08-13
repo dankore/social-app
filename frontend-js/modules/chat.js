@@ -38,6 +38,7 @@ export default class Chat {
       </div>
     `
     );
+    this.chatLog.scrollTop = this.chatLog.scrollHeight;
     this.chatField.value = "";
     this.chatField.focus();
   }
@@ -74,6 +75,7 @@ export default class Chat {
       </div>
     `
     );
+    this.chatLog.scrollTop = this.chatLog.scrollHeight;
   }
   injectHTML() {
     this.chatWrapper.innerHTML = `
