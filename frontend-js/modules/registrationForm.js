@@ -24,7 +24,15 @@ export default class RegistrationForm {
   }
 
   usernameHandler() {
-    alert("handle just ran");
+    this.usernameImmediately()
+    clearTimeout(this.username.timer)
+    this.username.timer = setTimeout(()=> this.usernameAfterDelay(), 3000)
+  }
+  usernameImmediately(){
+      console.log("Immediate method just ran")
+  }
+  usernameAfterDelay(){
+      alert("After delay just finanlly ran")
   }
 
   insertValidationElements() {
