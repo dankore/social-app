@@ -10,6 +10,7 @@ router.get("/", userController.home);
 router.post("/register", userController.register);
 router.post("/login", userController.login);
 router.post("/logout", userController.logout);
+router.post("/doesUsernameExist", userController.doesUsernameExist);
 
 // Profile related routes
 router.get(
@@ -30,7 +31,6 @@ router.get(
   userController.sharedProfileData,
   userController.profileFollowingScreen
 );
-
 
 // post related routes
 router.get(
