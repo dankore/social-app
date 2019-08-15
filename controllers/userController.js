@@ -1,21 +1,20 @@
-// Import User Model
 const User = require("../models/User");
 const Post = require("../models/Post");
 const Follow = require("../models/Follow");
 
+exports.doesUsernameExist = function(req, res) {
+  User.findByUsername(req.body.username)
+    .then(function() {
+      res.json(true);
+    })
+    .catch(function() {
+      res.json(false);
+    });
+};
+
 exports.doesEmailExist = async function(req, res) {
   let emailBool = await User.doesEmailExist(req.body.email);
   res.json(emailBool);
-};
-
-exports.doesUsernameExist = function(req, res) {
-  User.findByUserName(req.body.username)
-    .then(() => {
-      res.json(true);
-    })
-    .catch(() => {
-      res.json(false);
-    });
 };
 
 exports.sharedProfileData = async function(req, res, next) {
@@ -48,46 +47,43 @@ exports.sharedProfileData = async function(req, res, next) {
   next();
 };
 
-//Below is an alternative access
-// module.exports = {
-//     login: ()=>{},
-//     logout: () => { }
-// }
-
-exports.mustBeLoggedIn = (req, res, next) => {
+exports.mustBeLoggedIn = function(req, res, next) {
   if (req.session.user) {
     next();
   } else {
-    req.flash("errors", " You must be logged in to perform that action");
-    req.session.save(() => {
+    req.flash("errors", "You must be logged in to perform that action.");
+    req.session.save(function() {
       res.redirect("/");
     });
   }
 };
 
-exports.login = (req, res) => {
-  //Create an instance of User object
-  // And look into the body of the form => req.body for submissions
+exports.login = function(req, res) {
   let user = new User(req.body);
   user
     .login()
-    .then(result => {
+    .then(function(result) {
       req.session.user = {
         avatar: user.avatar,
         username: user.data.username,
         _id: user.data._id
       };
-      req.session.save(() => {
+      req.session.save(function() {
         res.redirect("/");
       });
     })
-    .catch(error => {
-      // Flash is accessing this => req.session.flash.errors = [errors]
-      req.flash("errors", error);
-      req.session.save(() => {
+    .catch(function(e) {
+      req.flash("errors", e);
+      req.session.save(function() {
         res.redirect("/");
       });
     });
+};
+
+exports.logout = function(req, res) {
+  req.session.destroy(function() {
+    res.redirect("/");
+  });
 };
 
 exports.register = function(req, res) {
@@ -113,31 +109,24 @@ exports.register = function(req, res) {
       });
     });
 };
-exports.logout = (req, res) => {
-  req.session.destroy(() => {
-    res.redirect("/");
-  });
-};
 
-exports.home = async (req, res) => {
+exports.home = async function(req, res) {
   if (req.session.user) {
-    //fetch feed of posts for current user
+    // fetch feed of posts for current user
     let posts = await Post.getFeed(req.session.user._id);
     res.render("home-dashboard", { posts: posts });
   } else {
-    res.render("home-guest", {
-      regErrors: req.flash("regErrors")
-    });
+    res.render("home-guest", { regErrors: req.flash("regErrors") });
   }
 };
 
-exports.ifUserExists = (req, res, next) => {
-  User.findByUserName(req.params.username)
-    .then(userDocument => {
+exports.ifUserExists = function(req, res, next) {
+  User.findByUsername(req.params.username)
+    .then(function(userDocument) {
       req.profileUser = userDocument;
       next();
     })
-    .catch(() => {
+    .catch(function() {
       res.render("404");
     });
 };
