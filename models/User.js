@@ -151,29 +151,46 @@ User.prototype.getAvatar = function() {
   this.avatar = `http://gravatar.com/avatar/${md5(this.data.email)}?s=128`;
 };
 
-User.findByUserName = (username)=>{
+User.findByUserName = username => {
   return new Promise((resolve, reject) => {
-    if(typeof(username) != "string"){
-      reject()
-      return
+    if (typeof username != "string") {
+      reject();
+      return;
     }
-    usersCollection.findOne({username: username}).then((userDoc)=>{
-      if(userDoc){
-        userDoc = new User(userDoc, true)
-        userDoc = {
-          _id: userDoc.data._id,
-          username: userDoc.data.username,
-          avatar: userDoc.avatar
+    usersCollection
+      .findOne({ username: username })
+      .then(userDoc => {
+        if (userDoc) {
+          userDoc = new User(userDoc, true);
+          userDoc = {
+            _id: userDoc.data._id,
+            username: userDoc.data.username,
+            avatar: userDoc.avatar
+          };
+          resolve(userDoc);
+        } else {
+          reject();
         }
-        resolve(userDoc)
-      } else {
-        reject()
-      }
+      })
+      .catch(() => {
+        reject();
+      });
+  });
+};
 
-    }).catch(()=>{
-      reject()
-    })
-  })
-}
+User.doesEmailExist = function(email) {
+  return new Promise(async function(resolve, reject) {
+    if (typeof email != "string") {
+      resolve(false);
+      return;
+    }
+    let user = await usersCollection.findOne({ email: email });
+    if (user) {
+      resolve(true);
+    } else {
+      false;
+    }
+  });
+};
 
 module.exports = User;

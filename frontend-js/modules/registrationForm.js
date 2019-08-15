@@ -48,6 +48,25 @@ export default class RegistrationForm {
         "You must provide a valid email address."
       );
     }
+    if (!this.email.errors) {
+      axios
+        .post("/doesEmailExist", { email: this.email.value })
+        .then(response => {
+          if (response.data) {
+            this.email.isUnique = false;
+            this.showValidationError(
+              this.email,
+              "That email is already being used."
+            );
+          } else {
+            this.email.isUnique = true;
+            this.hideValidationError(this.email);
+          }
+        })
+        .catch(() => {
+          console.log("Please try again later.");
+        });
+    }
   }
   usernameImmediately() {
     if (
