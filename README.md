@@ -1,4 +1,7 @@
-# GSS Gwarinpa Network - a social media for current and past GSS Gwarinpa students
-A basic todo app that performs CRUD operations on a backend server. CRUD stands for Create, Read, Update (edit), and Delete. 
+# GSS Gwarinpa Network 
+A social media network for current and past Junior and Senior Secondary Gwarinpa students.
+
+### Address
+PMB 240, Life Camp, Abuja, Nigeria
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
