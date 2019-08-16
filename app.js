@@ -3,6 +3,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const markdown = require("marked");
 const MongoStore = require("connect-mongo")(session);
+const csfr = require("csurf");
 const app = express();
 const sanitizeHTML = require("sanitize-html");
 
@@ -69,6 +70,13 @@ app.use(express.static("public"));
 // Make this app find html files
 app.set("views", "views-html"); // First arg must be views
 app.set("view engine", "ejs");
+
+app.use(csfr());
+
+app.use(function(req, res, next) {
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
 
 app.use("/", router);
 
