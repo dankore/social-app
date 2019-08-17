@@ -7,6 +7,12 @@ const csfr = require("csurf");
 const app = express();
 const sanitizeHTML = require("sanitize-html");
 
+// Add user submit input to body of request
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+app.use('/api', require('./router-api'))
+
 let sessionOptions = session({
   secret: "JavaScript is sooooo cool",
   store: new MongoStore({ client: require("./db") }),
@@ -61,9 +67,6 @@ app.use((req, res, next) => {
 
 const router = require("./router");
 
-// Add user submit input to body of request
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
 
 // Make this app find files for the public eyes - e.g css
 app.use(express.static("public"));
