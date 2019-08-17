@@ -18,6 +18,18 @@ exports.create = (req, res) => {
       req.session.save(() => res.redirect("/create-post"));
     });
 };
+exports.apiCreate = (req, res) => {
+  let post = new Post(req.body, req.apiUser._id);
+
+  post
+    .create()
+    .then(newId => {
+      res.json("Congrats.")
+    })
+    .catch(errors => {
+     res.json(errors)
+    });
+};
 
 exports.viewSingle = async (req, res) => {
   try {
