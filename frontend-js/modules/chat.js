@@ -90,7 +90,7 @@ export default class Chat {
        <div id="chat" class="chat-log"></div>
 
        <form id="chatForm" class="chat-form border-top">
-      <input type="text" class="chat-field" id="chatField" placeholder="Type a message…" autocomplete="off">
+      <input type="text" class="chat-field" id="chatField" placeholder="Type a message and press enter…" autocomplete="off">
     </form>
       `;
   }
