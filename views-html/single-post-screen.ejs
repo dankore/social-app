@@ -19,7 +19,7 @@
         action="/post/<%= post._id %>/delete"
         method="POST"
       >
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
         <button
           class="delete-post-button text-danger"
           data-toggle="tooltip"
@@ -38,14 +38,20 @@
     <a href="/profile/<%= post.author.username %>"
       ><img class="avatar-tiny" src="<%= post.author.avatar %>"
     /></a>
-    Posted by <a href="/profile/<%= post.author.username %>"><%= post.author.username %></a> on <%=
-    post.createdDate.getMonth() + 1 %>/<%= post.createdDate.getDate() %>/<%=
-    post.createdDate.getFullYear() %>
+    Posted by
+    <a href="/profile/<%= post.author.username %>"
+      ><%= post.author.username %></a
+    >
+    on <%= post.createdDate.getMonth() + 1 %>/<%= post.createdDate.getDate()
+    %>/<%= post.createdDate.getFullYear() %>
   </p>
 
   <div class="body-content">
     <%- filterUserHTML(post.body) %>
   </div>
+</div>
+<div class="container py-md-5 container--narrow">
+  <p>Comments!</p>
 </div>
 
 <%- include('includes/footer') %>
