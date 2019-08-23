@@ -1,6 +1,6 @@
 <%- include('includes/header') %>
 
-<div class="container py-md-5 container--narrow">
+<div class="container pt-md-5 container--narrow">
   <%- include('includes/flash') %>
   <div class="d-flex justify-content-between">
     <h2><%= post.title %></h2>
@@ -50,8 +50,25 @@
     <%- filterUserHTML(post.body) %>
   </div>
 </div>
+
+<!-- Comments -->
 <div class="container py-md-5 container--narrow">
-  <p>Comments!</p>
+  <div id="comments-receiver" class="">
+    <p>First comment!</p>
+  </div>
+  <form id="comments-form" action="/comments" method="POST" class="form-group">
+    <label class="block pt-2"
+      ><strong class="mb-1">Add a comment!</strong>
+      <div class="form-group mb-2">
+        <textarea id="comments-textarea" class="" name="comment" rows="4"></textarea>
+        <div class="flex">
+          <button type="submit" class="btn-primary">
+            Submit
+          </button>
+        </div>
+      </div>
+    </label>
+  </form>
 </div>
 
 <%- include('includes/footer') %>
