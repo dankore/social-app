@@ -10,7 +10,7 @@ exports.viewCreateScreen = function(req, res) {
 exports.createComment = async (req, res) => {
   let comment = new Comments(req.body);
   await comment.create();
-  res.redirect(`/post`);
+  res.redirect("/create-comment");
 };
 
 exports.create = (req, res) => {
