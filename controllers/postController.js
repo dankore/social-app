@@ -1,9 +1,16 @@
 const Post = require("../models/Post");
+const Comments = require("../models/Comments");
 const sendgrid = require('@sendgrid/mail')
 sendgrid.setApiKey(process.env.SENDGRIDAPIKEY)
 
 exports.viewCreateScreen = function(req, res) {
   res.render("create-post");
+};
+
+exports.createComment = async (req, res) => {
+  let comment = new Comments(req.body);
+  await comment.create();
+  res.redirect("/");
 };
 
 exports.create = (req, res) => {
