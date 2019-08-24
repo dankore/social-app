@@ -34,7 +34,7 @@ router.get(
 );
 
 // comment related routes
-router.post("/create-comment", postController.createComment);
+router.post("/create-comment/:id", postController.createComment);
 
 
 // post related routes
