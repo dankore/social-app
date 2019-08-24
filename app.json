@@ -1,0 +1,30 @@
+{
+  "addons": [
+    "pointdns"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "env": {
+    "CONNECTIONSTRING": {
+      "required": true
+    },
+    "JWTSECRET": {
+      "required": true
+    },
+    "SENDGRIDAPIKEY": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "name": "social-app",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
