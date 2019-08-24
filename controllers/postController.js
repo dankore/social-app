@@ -8,7 +8,7 @@ exports.viewCreateScreen = function(req, res) {
 };
 
 exports.createComment = async (req, res) => {
-  let comment = new Comments(req.body);
+  let comment = new Comments(req.body, req.params.id);
   await comment.create();
   res.redirect(`/post/${req.params.id}`);
 };
