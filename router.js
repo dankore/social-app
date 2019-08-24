@@ -35,8 +35,6 @@ router.get(
 
 // comment related routes
 router.post("/create-comment", postController.createComment);
-router.get("/create-comment", postController.viewComment);
-
 
 // post related routes
 router.get(
