@@ -33,6 +33,10 @@ router.get(
   userController.profileFollowingScreen
 );
 
+// comment related routes
+router.post("/create-comment", postController.createComment);
+
+
 // post related routes
 router.get(
   "/create-post",
