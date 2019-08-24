@@ -7,7 +7,10 @@ let Comments = function(data){
 }
 
 Comments.prototype.create = function(){
-  return new Promise((resolve, reject)=>{})
+  return new Promise((resolve, reject)=>{
+  let comment commentsCollection.insertOne(this.data)
+  if(data){resolve(data)}else{reject()}
+  })
 }
 
 
