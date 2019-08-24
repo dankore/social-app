@@ -60,6 +60,7 @@
     <label class="block pt-2"
       ><strong class="mb-1">Add a comment!</strong>
       <div class="form-group mb-2">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
         <textarea id="comments-textarea" class="" name="comment" rows="4"></textarea>
         <div class="flex">
           <button type="submit" class="btn-primary">
