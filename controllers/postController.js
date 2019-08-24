@@ -10,7 +10,7 @@ exports.viewCreateScreen = function(req, res) {
 exports.createComment = async (req, res) => {
   let comment = new Comments(req.body);
   await comment.create();
-  res.render("single-post-screen");
+  res.redirect(`/post/${req.params.id}`);
 };
 
 exports.create = (req, res) => {
