@@ -10,7 +10,7 @@ exports.viewCreateScreen = function(req, res) {
 exports.createComment = async (req, res) => {
   let comment = new Comments(req.body);
   await comment.create();
-  res.redirect("/create-comment");
+  res.redirect("/post");
 };
 
 exports.create = (req, res) => {
@@ -34,6 +34,7 @@ exports.create = (req, res) => {
       req.session.save(() => res.redirect("/create-post"));
     });
 };
+
 exports.apiCreate = (req, res) => {
   let post = new Post(req.body, req.apiUser._id);
 
