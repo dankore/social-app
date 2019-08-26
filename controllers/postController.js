@@ -1,6 +1,27 @@
 const Post = require("../models/Post");
-const sendgrid = require('@sendgrid/mail')
-sendgrid.setApiKey(process.env.SENDGRIDAPIKEY)
+const sendgrid = require("@sendgrid/mail");
+sendgrid.setApiKey(process.env.SENDGRIDAPIKEY);
+
+exports.showThread = async function(req, res) {
+  try {
+    let threads = await Post.getThreads();
+    let user = req.session.user;
+    res.render("thread", { threads: threads, user: user });
+  } catch {}
+};
+
+exports.createThread = function(req, res) {
+  Post.threads(req.body)
+    .then(thread => {
+      resolve(thread);
+      // res.redirect('/thread')
+      req.flash("success", "New thread successfully created.");
+      req.session.save(() => res.redirect("/thread"));
+    })
+    .catch(() => {
+     res.send("We encouter some problems.")
+    });
+};
 
 exports.viewCreateScreen = function(req, res) {
   res.render("create-post");
@@ -15,10 +36,11 @@ exports.create = (req, res) => {
       sendgrid.send({
         to: "adamu.dankore@gmail.com",
         from: "adamu.dankore@gmail.com",
-        subject: 'Congrats, you just created a new post!',
-        text: 'You did a great job of creating a post',
-        html: 'You did a <strong>great</strong> job creating a post on the GSS Gwarinpa Network!' // Use backticks to dynamically do stuff
-      })
+        subject: "Congrats, you just created a new post!",
+        text: "You did a great job of creating a post",
+        html:
+          "You did a <strong>great</strong> job creating a post on the GSS Gwarinpa Network!" // Use backticks to dynamically do stuff
+      });
       req.flash("success", "New post successfully created.");
       req.session.save(() => res.redirect(`/post/${newId}`));
     })
@@ -33,17 +55,17 @@ exports.apiCreate = (req, res) => {
   post
     .create()
     .then(newId => {
-      res.json("Congrats.")
+      res.json("Congrats.");
     })
     .catch(errors => {
-     res.json(errors)
+      res.json(errors);
     });
 };
 
 exports.viewSingle = async (req, res) => {
   try {
     let post = await Post.findSingleById(req.params.id, req.visitorId);
-    res.render("single-post-screen", { post: post, title: post.title});
+    res.render("single-post-screen", { post: post, title: post.title });
   } catch {
     res.render("404");
   }
@@ -112,10 +134,10 @@ exports.delete = (req, res) => {
 exports.apiDelete = (req, res) => {
   Post.delete(req.params.id, req.apiUser._id)
     .then(() => {
-      res.json("Success!")
+      res.json("Success!");
     })
     .catch(() => {
-      res.json("You do not have permission to perform that action.")
+      res.json("You do not have permission to perform that action.");
     });
 };
 

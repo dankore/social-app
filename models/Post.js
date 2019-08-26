@@ -4,6 +4,9 @@ const postsCollection = require("../db")
 const followsCollection = require("../db")
   .db()
   .collection("follows");
+const threadCollection = require("../db")
+  .db()
+  .collection("threads");
 const ObjectID = require("mongodb").ObjectID;
 const User = require("./User");
 const sanitizeHTML = require("sanitize-html");
@@ -215,6 +218,43 @@ Post.getFeed = async function(id) {
     { $match: { author: { $in: followedUsers } } },
     { $sort: { createdDate: -1 } }
   ]);
+};
+
+// Post.cleanUpThread = function() {
+//   if (typeof this.data != "string") {
+//     data = "";
+//   }
+
+//   // get rid of any bogus properties
+//   data = {
+//     thread: sanitizeHTML(this.data.trim(), {
+//       allowedTags: [],
+//       allowedAttributes: {}
+//     }),
+//     createdDate: new Date(),
+//     author: ObjectID(this.userid)
+//   };
+// };
+Post.threads = function(data) {
+  return new Promise(async (resolve, reject) => {
+    let newThread = await threadCollection.insertOne(data);
+    if (newThread) {
+      resolve(newThread);
+    } else {
+      reject();
+    }
+  });
+};
+
+Post.getThreads = function() {
+  return new Promise(async (resolve, reject) => {
+    let threads = await threadCollection.find().toArray();
+    if (threads) {
+      resolve(threads);
+    } else {
+      reject();
+    }
+  });
 };
 
 module.exports = Post;

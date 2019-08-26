@@ -1,9 +1,13 @@
-//This file list urls/routes we looking for in get. post
+//This file list urls/routes we looking for in get/post
 const express = require("express");
 const router = express.Router();
 const userController = require("./controllers/userController");
 const postController = require("./controllers/postController");
 const followController = require("./controllers/followController");
+
+//Thread related routes
+router.get("/thread", postController.showThread);
+router.post("/thread", postController.createThread);
 
 // User related routes
 router.get("/", userController.home);
