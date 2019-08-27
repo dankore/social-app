@@ -2,9 +2,14 @@ const threadCollection = require("../db")
   .db()
   .collection("thread2");
 const sanitizeHTML = require("sanitize-html");
+const ObjectID = require("mongodb").ObjectID;
+const User = require("./User");
 
-let Thread = function(data) {
+
+
+let Thread = function(data, userid) {
   this.data = data;
+  this.userid = userid
   this.errors = [];
 };
 
@@ -19,7 +24,8 @@ Thread.prototype.cleanUp = function() {
       allowedTags: [],
       allowedAttributes: {}
     }),
-    createdDate: new Date()
+    createdDate: new Date(),
+    author: ObjectID(this.userid)
   };
 };
 
@@ -50,9 +56,56 @@ Thread.prototype.create = function() {
   });
 };
 
-Thread.find = function() {
+// Thread.find = function() {
+//   return new Promise(async (resolve, reject) => {
+//     let threads = await threadCollection
+//       .find()
+//       .toArray();
+//     if (threads) {
+//       resolve(threads);
+//     } else {
+//       reject();
+//     }
+//   });
+// };
+
+Thread.find = function(id) {
+    console.log(id)
   return new Promise(async (resolve, reject) => {
-    let threads = await threadCollection.find().toArray();
+    if (typeof id != "string" || !ObjectID.isValid(id)) {
+      reject();
+      return;
+    }
+    let threads = await threadCollection
+      .aggregate([
+        { $match: { author: new ObjectID(id) } },
+        {
+          $lookup: {
+            from: "users",
+            localField: "author",
+            foreignField: "_id",
+            as: "authorDocument"
+          }
+        },
+        {
+          $project: {
+            thread: 1,
+            createdDate: 1,
+            author: { $arrayElemAt: ["$authorDocument", 0] }
+          }
+        }
+      ])
+      .toArray();
+      console.log(threads)
+
+    // Cleanup author property in each post object
+    threads = threads.map(function(thread) {
+      thread.author = {
+        username: thread.author.username,
+        avatar: new User(thread.author, true).avatar
+      };
+      return thread;
+    });
     if (threads) {
       resolve(threads);
     } else {
@@ -60,5 +113,10 @@ Thread.find = function() {
     }
   });
 };
+
+
+
+
+
 
 module.exports = Thread;

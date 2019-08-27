@@ -4,20 +4,20 @@
 <div class="container py-md-5 container--narrow">
   <h1 class="text-white">Thread</h1>
   <div>
-    <% threads.forEach(item => { %>
+    <% threads.forEach(thread => { %>
     <div style="overflow-wrap: break-word; min-width: 0px" class="bg-white p-3 border-bottom border-dark rounded">
       <div class="d-flex flex-row justify-content-between">
         <div>
          <a href="/profile/<%= user.username %>"><img class="avatar-tiny" src="<%= user.avatar %>" /></a>
-          <a href="/profile/<%= user.username %>"><%= user.username %></a>
+          <a href="/profile/<%= user.username %>"><%= thread.author.username %></a>
         </div>
         <div>
           <p class="block"> 
-              <%= item.createdDate.getMonth() + 1 %>/<%= item.createdDate.getDate() %>/<%=item.createdDate.getFullYear() %> 
+              <%= thread.createdDate.getMonth() + 1 %>/<%= thread.createdDate.getDate() %>/<%=thread.createdDate.getFullYear() %> 
             </p>
         </div>
       </div>
-      <h4 class="my-1 text-3xl"><%= item.thread %></h4>
+      <h4 class="my-1 text-3xl"><%= thread.thread %></h4>
     </div>
     <% }) %>
     <form id="thread-form" action="/thread" method="POST" class="d-flex mt-4 flex-column">
