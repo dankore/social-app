@@ -1,4 +1,5 @@
 const Thread = require("../models/Thread");
+// var scrollToElement = require("scroll-to-element");
 
 
 exports.show = async function(req, res) {
@@ -10,13 +11,14 @@ exports.show = async function(req, res) {
 
 exports.create = (req, res) => {
   let thread = new Thread(req.body);
-  
   thread
     .create()
     .then(() => {
-      res.redirect("/thread");
+    //   res.redirect("/thread");
+      req.session.save(() => res.redirect('thread'));
     })
-    .catch(() => {
-      res.send("Problem from threadController file");
+    .catch((errors) => {
+    errors.forEach(error => req.flash("errors", error));
+    req.session.save(() => res.redirect("/thread"));
     });
 };

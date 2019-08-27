@@ -1,29 +1,32 @@
 <%- include('includes/header') %>
+<div class="w-100 bg-dark">
+<%- include('includes/flash') %>
 <div class="container py-md-5 container--narrow">
-  <h1>Thread</h1>
+  <h1 class="text-white">Thread</h1>
   <div>
     <% threads.forEach(item => { %>
-    <div class="bg-light p-3 mb-3 rounded">
+    <div style="overflow-wrap: break-word; min-width: 0px" class="bg-white p-3 border-bottom border-dark rounded">
       <div class="d-flex flex-row justify-content-between">
         <div>
-          <img class="avatar-tiny" src="<%= user.avatar %>" />
-          <span class=""><%= user.username %></span>
+         <a href="/profile/<%= user.username %>"><img class="avatar-tiny" src="<%= user.avatar %>" /></a>
+          <a href="/profile/<%= user.username %>"><%= user.username %></a>
         </div>
         <div>
           <p class="block">
           </p>
         </div>
       </div>
-      <p class="ml-2"><%= item.thread %></p>
+      <h4 class="my-1 text-3xl"><%= item.thread %></h4>
     </div>
     <% }) %>
-    <form action="/thread" method="POST" class="d-flex mt-4 flex-column">
-      <p class="mb-0">Add another thread</p>
+    <form id="thread-form" action="/thread" method="POST" class="d-flex mt-4 flex-column">
+      <p class="mb-0 text-white">Add another thread</p>
       <textarea name="thread" rows="4"></textarea>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
       <input type="submit" />
     </form>
   </div>
+</div>
 </div>
 
 <%- include('includes/footer') %>
