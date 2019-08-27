@@ -5,8 +5,11 @@ const Thread = require("../models/Thread");
 exports.show = async function(req, res) {
   try {
     let threadz = await Thread.find();
+    // console.log(threadz[10].createdDate)
     res.render("thread", { threads: threadz });
-  } catch {}
+  } catch {
+      res.send('Issues showing thread.')
+  }
 };
 
 exports.create = (req, res) => {
@@ -14,7 +17,6 @@ exports.create = (req, res) => {
   thread
     .create()
     .then(() => {
-    //   res.redirect("/thread");
       req.session.save(() => res.redirect('thread'));
     })
     .catch((errors) => {

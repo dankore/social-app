@@ -37,7 +37,8 @@ Thread.prototype.create = function() {
       await threadCollection
         .insertOne(this.data)
         .then(thread => {
-          resolve(thread);
+        //  console.log(thread.ops[0]);
+          resolve(thread.ops);
         })
         .catch(() => {
          this.errors.push("Please try again later.");

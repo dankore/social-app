@@ -12,8 +12,9 @@
           <a href="/profile/<%= user.username %>"><%= user.username %></a>
         </div>
         <div>
-          <p class="block">
-          </p>
+          <p class="block"> 
+              <%= item.createdDate.getMonth() + 1 %>/<%= item.createdDate.getDate() %>/<%=item.createdDate.getFullYear() %> 
+            </p>
         </div>
       </div>
       <h4 class="my-1 text-3xl"><%= item.thread %></h4>
@@ -23,7 +24,7 @@
       <p class="mb-0 text-white">Add another thread</p>
       <textarea name="thread" rows="4"></textarea>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-      <input type="submit" />
+    <button class="btn btn-primary" aria-pressed="true">Submit</button>
     </form>
   </div>
 </div>
