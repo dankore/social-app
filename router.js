@@ -4,6 +4,12 @@ const router = express.Router();
 const userController = require("./controllers/userController");
 const postController = require("./controllers/postController");
 const followController = require("./controllers/followController");
+const threadController = require("./controllers/threadController");
+
+
+// Thread related routes
+router.get("/thread", threadController.show);
+router.post("/thread", threadController.create);
 
 // User related routes
 router.get("/", userController.home);

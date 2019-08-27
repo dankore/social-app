@@ -1,0 +1,29 @@
+<%- include('includes/header') %>
+<div class="container py-md-5 container--narrow">
+  <h1>Thread</h1>
+  <div>
+    <% threads.forEach(item => { %>
+    <div class="bg-light p-3 mb-3 rounded">
+      <div class="d-flex flex-row justify-content-between">
+        <div>
+          <img class="avatar-tiny" src="<%= user.avatar %>" />
+          <span class=""><%= user.username %></span>
+        </div>
+        <div>
+          <p class="block">
+          </p>
+        </div>
+      </div>
+      <p class="ml-2"><%= item.thread %></p>
+    </div>
+    <% }) %>
+    <form action="/thread" method="POST" class="d-flex mt-4 flex-column">
+      <p class="mb-0">Add another thread</p>
+      <textarea name="thread" rows="4"></textarea>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      <input type="submit" />
+    </form>
+  </div>
+</div>
+
+<%- include('includes/footer') %>
