@@ -8,8 +8,8 @@ const threadController = require("./controllers/threadController");
 
 
 // Thread related routes
-router.get("/thread", threadController.show);
-router.post("/thread", threadController.create);
+router.get("/thread", userController.mustBeLoggedIn, threadController.show);
+router.post("/thread", userController.mustBeLoggedIn, threadController.create);
 
 // User related routes
 router.get("/", userController.home);

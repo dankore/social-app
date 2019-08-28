@@ -43,7 +43,6 @@ Thread.prototype.create = function() {
       await threadCollection
         .insertOne(this.data)
         .then(thread => {
-        //  console.log(thread.ops[0]);
           resolve(thread.ops);
         })
         .catch(() => {
@@ -70,7 +69,6 @@ Thread.prototype.create = function() {
 // };
 
 Thread.find = function(id) {
-    console.log(id)
   return new Promise(async (resolve, reject) => {
     if (typeof id != "string" || !ObjectID.isValid(id)) {
       reject();
@@ -96,21 +94,15 @@ Thread.find = function(id) {
         }
       ])
       .toArray();
-      console.log(threads)
-
-    // Cleanup author property in each post object
-    threads = threads.map(function(thread) {
-      thread.author = {
-        username: thread.author.username,
-        avatar: new User(thread.author, true).avatar
-      };
-      return thread;
-    });
-    if (threads) {
-      resolve(threads);
-    } else {
-      reject();
-    }
+    // // Cleanup author property in each thread object
+    // threads = threads.map(function(thread) {
+    //   thread.author = {
+    //     username: thread.author.username,
+    //     avatar: new User(thread.author, true).avatar
+    //   };
+    //   return thread;
+    // });
+    resolve(threads)
   });
 };
 
