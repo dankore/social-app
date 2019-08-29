@@ -5,8 +5,7 @@ const User = require("../models/User");
 exports.show = async function(req, res) {
   // fetch feed of threads for current user
   try {
-    
-    let threadz = await Thread.find(req.user.data._id);
+    let threadz = await Thread.find(req.session.user._id);
     res.render("thread", { threads: threadz });
   } catch {
     res.send("Problem from threadController show fn.");
