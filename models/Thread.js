@@ -7,14 +7,13 @@ const User = require("./User");
 
 
 
-let Thread = function(data, userid, username) {
+let Thread = function(data, userid) {
   this.data = data;
   this.userid = userid;
-  this.username = username;
   this.errors = [];
 };
 
-Thread.prototype.cleanUp = function() {
+Thread.prototype.cleanUp = function(req, res) {
   if (typeof this.data.thread != "string") {
     this.data.thread = "";
   }
@@ -25,7 +24,7 @@ Thread.prototype.cleanUp = function() {
       allowedTags: [],
       allowedAttributes: {}
     }),
-    username: user.data.username,
+    username: req.body.username,
     createdDate: new Date(),
     author: ObjectID(this.userid)
   };
