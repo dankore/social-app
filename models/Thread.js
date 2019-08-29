@@ -55,58 +55,56 @@ Thread.prototype.create = function() {
   });
 };
 
-// Thread.find = function() {
-//   return new Promise(async (resolve, reject) => {
-//     let threads = await threadCollection
-//       .find()
-//       .toArray();
-//     if (threads) {
-//       resolve(threads);
-//     } else {
-//       reject();
-//     }
-//   });
-// };
-
-Thread.find = function(id) {
+Thread.find = function() {
   return new Promise(async (resolve, reject) => {
-    if (typeof id != "string" || !ObjectID.isValid(id)) {
-      reject();
-      return;
-    }
     let threads = await threadCollection
-      .aggregate([
-        { $match: { author: new ObjectID(id) } },
-        {
-          $lookup: {
-            from: "users",
-            localField: "author",
-            foreignField: "_id",
-            as: "authorDocument"
-          }
-        },
-        {
-          $project: {
-            thread: 1,
-            createdDate: 1,
-            author: { $arrayElemAt: ["$authorDocument", 0] }
-          }
-        }
-      ])
+      .find()
       .toArray();
-    // // Cleanup author property in each thread object
-    // threads = threads.map(function(thread) {
-    //   thread.author = {
-    //     username: thread.author.username,
-    //     avatar: new User(thread.author, true).avatar
-    //   };
-    //   return thread;
-    // });
-    resolve(threads)
+    if (threads) {
+      resolve(threads);
+    } else {
+      reject();
+    }
   });
 };
 
-
+// Thread.find = function(id) {
+//   return new Promise(async (resolve, reject) => {
+//     if (typeof id != "string" || !ObjectID.isValid(id)) {
+//       reject();
+//       return;
+//     }
+//     let threads = await threadCollection
+//       .aggregate([
+//         { $match: { author: new ObjectID(id) } },
+//         {
+//           $lookup: {
+//             from: "users",
+//             localField: "author",
+//             foreignField: "_id",
+//             as: "authorDocument"
+//           }
+//         },
+//         {
+//           $project: {
+//             thread: 1,
+//             createdDate: 1,
+//             author: { $arrayElemAt: ["$authorDocument", 0] }
+//           }
+//         }
+//       ])
+//       .toArray();
+//     // // Cleanup author property in each thread object
+//     // threads = threads.map(function(thread) {
+//     //   thread.author = {
+//     //     username: thread.author.username,
+//     //     avatar: new User(thread.author, true).avatar
+//     //   };
+//     //   return thread;
+//     // });
+//     resolve(threads)
+//   });
+// };
 
 
 
