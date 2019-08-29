@@ -8,8 +8,8 @@
     <div style="overflow-wrap: break-word; min-width: 0px" class="bg-white p-3 border-bottom border-dark rounded">
       <div class="d-flex flex-row justify-content-between">
         <div>
-         <a href="/profile/<%= user.username %>"><img class="avatar-tiny" src="<%= user.avatar %>" /></a>
-          <a href="/profile/<%= user.username %>"><%= thread.author.username %></a>
+         <a href="/profile/<%=thread.author.username %>"><img class="avatar-tiny" src="<%= thread.author.avatar %>" /></a>
+          <a href="/profile/<%= thread.author.username %>"><%= thread.author.username %></a>
         </div>
         <div>
           <p class="block"> 
