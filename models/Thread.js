@@ -68,15 +68,15 @@ Thread.prototype.create = function() {
 //   });
 // };
 
-Thread.find = function(userid) {
+Thread.find = function(id) {
   return new Promise(async (resolve, reject) => {
-    if (typeof id != "string" || !ObjectID.isValid(userid)) {
+    if (typeof id != "string" || !ObjectID.isValid(id)) {
       reject();
       return;
     }
     let threads = await threadCollection
       .aggregate([
-        { $match: { author: new ObjectID(userid) } },
+        { $match: { author: new ObjectID(id) } },
         {
           $lookup: {
             from: "users",
