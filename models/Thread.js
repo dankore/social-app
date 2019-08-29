@@ -93,44 +93,6 @@ Thread.find = function(id) {
     resolve(threads)
   });
 };
-// app.post("/delete-item", (req, res) => {
-//   db.collection("items").deleteOne(
-//     { _id: new mongodb.ObjectId(req.body.id) },
-//     () => {
-//       res.send("Success");
-//     }
-//   );
-// });
-
-// Thread.delete = (postIdToDelete, currentUserId) => {
-//   return new Promise(async (resolve, reject) => {
-//     try {
-//         let deleted  = await threadCollection.deleteOne({ _id: new ObjectID(postIdToDelete) });
-//         resolve(deleted);
-//     } catch {
-//       reject();
-//     }
-//   });
-// };
-
-// Thread.findSingleById = function(id, visitorId) {
-//   return new Promise(async (resolve, reject) => {
-//     if (typeof id != "string" || !ObjectID.isValid(id)) {
-//       reject();
-//       return;
-//     }
-//     let thread = await Thread.find(
-//       [{ $match: { _id: new ObjectID(id) } }],
-//       visitorId
-//     );
-//     if (thread.length) {
-//       resolve(thread[0]);
-//     } else {
-//       reject();
-//     }
-//   });
-// };
-
 
 
 module.exports = Thread;
