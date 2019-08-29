@@ -55,18 +55,6 @@ Thread.prototype.create = function() {
   });
 };
 
-// Thread.find = function() {
-//   return new Promise(async (resolve, reject) => {
-//     let threads = await threadCollection
-//       .find()
-//       .toArray();
-//     if (threads) {
-//       resolve(threads);
-//     } else {
-//       reject();
-//     }
-//   });
-// };
 
 Thread.find = function(id) {
   return new Promise(async (resolve, reject) => {
@@ -119,7 +107,6 @@ Thread.delete = (postIdToDelete, currentUserId) => {
     try {
         let deleted  = await threadCollection.deleteOne({ _id: new ObjectID(postIdToDelete) });
         resolve(deleted);
-      }
     } catch {
       reject();
     }
