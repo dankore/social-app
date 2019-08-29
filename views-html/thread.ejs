@@ -20,7 +20,7 @@
       <h4 class="my-1 text-3xl"><%= thread.thread %></h4>
     </div>
     <% }) %>
-    <form id="thread-form" action="/thread-delete" method="POST" class="d-flex mt-4 flex-column">
+    <form id="thread-form" action="/thread" method="POST" class="d-flex mt-4 flex-column">
       <p class="mb-0 text-white">Add to the thread</p>
       <textarea name="thread" rows="4"></textarea>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
