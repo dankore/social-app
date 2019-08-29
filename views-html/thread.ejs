@@ -1,0 +1,33 @@
+<%- include('includes/header') %>
+<div class="w-100 bg-dark">
+<%- include('includes/flash') %>
+<div class="container py-md-5 container--narrow">
+  <h1 class="text-white">Thread</h1>
+  <div>
+    <% threads.forEach(thread => { %>
+    <div style="overflow-wrap: break-word; min-width: 0px" class="bg-white p-3 border-bottom border-dark rounded">
+      <div class="d-flex flex-row justify-content-between">
+        <div>
+         <a href="/profile/<%=thread.author.username %>"><img class="avatar-tiny" src="<%= thread.author.avatar %>" /></a>
+          <a href="/profile/<%= thread.author.username %>"><%= thread.author.username %></a>
+        </div>
+        <div>
+          <p class="block"> 
+              <%= thread.createdDate.getMonth() + 1 %>/<%= thread.createdDate.getDate() %>/<%=thread.createdDate.getFullYear() %> 
+            </p>
+        </div>
+      </div>
+      <h4 class="my-1 text-3xl"><%= thread.thread %></h4>
+    </div>
+    <% }) %>
+    <form id="thread-form" action="/thread" method="POST" class="d-flex mt-4 flex-column">
+      <p class="mb-0 text-white">Add to the thread</p>
+      <textarea name="thread" rows="4"></textarea>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <button class="btn btn-info" aria-pressed="true">Submit</button>
+    </form>
+  </div>
+</div>
+</div>
+
+<%- include('includes/footer') %>
