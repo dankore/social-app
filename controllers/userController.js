@@ -2,6 +2,7 @@ const User = require("../models/User");
 const Post = require("../models/Post");
 const Follow = require("../models/Follow");
 const jwt = require('jsonwebtoken')
+sendgrid.setApiKey(process.env.SENDGRIDAPIKEY)
 
 
 
@@ -121,6 +122,15 @@ exports.register = function(req, res) {
   user
     .register()
     .then(() => {
+    // Notify new registers
+    sendgrid.send({
+        to: "user.data.email",
+        from: "adamu.dankore@gmail.com",
+        subject: 'New user alert!',
+        text: 'Thank you for regisering on the GSS gwarinpa Network. Happy networking!',
+        html: 'Thank you for regisering on the GSS gwarinpa Network. Happy networking!' // Use backticks to dynamically do stuff
+       })
+    
       req.session.user = {
         username: user.data.username,
         avatar: user.avatar,
