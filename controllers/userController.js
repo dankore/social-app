@@ -122,15 +122,6 @@ exports.register = function(req, res) {
   user
     .register()
     .then(() => {
-    // Notify new registers
-    sendgrid.send({
-        to: "user.data.email",
-        from: "adamu.dankore@gmail.com",
-        subject: 'New user alert!',
-        text: 'Thank you for regisering on the GSS gwarinpa Network. Happy networking!',
-        html: 'Thank you for regisering on the GSS gwarinpa Network. Happy networking!' // Use backticks to dynamically do stuff
-       })
-    
       req.session.user = {
         username: user.data.username,
         avatar: user.avatar,
