@@ -21,10 +21,10 @@
     </div>
     <% }) %>
     <form id="thread-form" action="/thread-delete" method="POST" class="d-flex mt-4 flex-column">
-      <p class="mb-0 text-white">Add another thread</p>
+      <p class="mb-0 text-white">Add to the thread</p>
       <textarea name="thread" rows="4"></textarea>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-    <button class="btn btn-primary" aria-pressed="true">Submit</button>
+    <button class="btn btn-info" aria-pressed="true">Submit</button>
     </form>
   </div>
 </div>
