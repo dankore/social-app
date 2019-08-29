@@ -13,11 +13,11 @@ exports.create = (req, res) => {
     .create()
     .then(newId => {
       sendgrid.send({
-        to: "adamu.dankore@gmail.com",
+        to: "req.session.user.email",
         from: "adamu.dankore@gmail.com",
         subject: 'Congrats, you just created a new post!',
-        text: 'You did a great job of creating a post',
-        html: 'You did a <strong>great</strong> job creating a post on the GSS Gwarinpa Network!' // Use backticks to dynamically do stuff
+        text: 'Thank you for creating a post on the GSS Gwarinpa Network!',
+        html: 'Thank you for creating a post on the GSS Gwarinpa Network!' // Use backticks to dynamically do stuff
       })
       req.flash("success", "New post successfully created.");
       req.session.save(() => res.redirect(`/post/${newId}`));
