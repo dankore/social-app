@@ -102,16 +102,16 @@ Thread.find = function(id) {
 //   );
 // });
 
-Thread.delete = (postIdToDelete, currentUserId) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-        let deleted  = await threadCollection.deleteOne({ _id: new ObjectID(postIdToDelete) });
-        resolve(deleted);
-    } catch {
-      reject();
-    }
-  });
-};
+// Thread.delete = (postIdToDelete, currentUserId) => {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//         let deleted  = await threadCollection.deleteOne({ _id: new ObjectID(postIdToDelete) });
+//         resolve(deleted);
+//     } catch {
+//       reject();
+//     }
+//   });
+// };
 
 // Thread.findSingleById = function(id, visitorId) {
 //   return new Promise(async (resolve, reject) => {
