@@ -24,3 +24,17 @@ exports.create = (req, res) => {
       req.session.save(() => res.redirect("/thread"));
     });
 };
+
+exports.delete = (req, res) => {
+  Thread.delete(req.visitorId)
+    .then(() => {
+      req.flash("success", "Successfully deleted.");
+      req.session.save(() => {
+        res.redirect("/thread");
+      });
+    })
+    .catch(() => {
+      req.flash("errors", "You do not have permission to perform that action");
+      req.session.save(() => res.redirect("/"));
+    });
+};
