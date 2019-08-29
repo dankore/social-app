@@ -24,7 +24,6 @@ Thread.prototype.cleanUp = function(req, res) {
       allowedTags: [],
       allowedAttributes: {}
     }),
-    username: req.body.username,
     createdDate: new Date(),
     author: ObjectID(this.userid)
   };
