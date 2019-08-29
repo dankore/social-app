@@ -13,7 +13,7 @@ exports.create = (req, res) => {
     .create()
     .then(newId => {
       sendgrid.send({
-        to: "req.session.user.email",
+        to: "adamu.dankore@gmail.com",
         from: "adamu.dankore@gmail.com",
         subject: 'Congrats, you just created a new post!',
         text: 'Thank you for creating a post on the GSS Gwarinpa Network!',
