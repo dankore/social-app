@@ -14,6 +14,7 @@ let Thread = function(data, userid) {
 };
 
 Thread.prototype.cleanUp = function() {
+  let user = new User(req.body)
   if (typeof this.data.thread != "string") {
     this.data.thread = "";
   }
@@ -24,6 +25,7 @@ Thread.prototype.cleanUp = function() {
       allowedTags: [],
       allowedAttributes: {}
     }),
+    username: user.data.username,
     createdDate: new Date(),
     author: ObjectID(this.userid)
   };
