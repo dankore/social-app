@@ -9,7 +9,7 @@ const User = require("./User");
 
 let Thread = function(data, userid) {
   this.data = data;
-  userid = userid
+  this.userid = userid
   this.errors = [];
 };
 
@@ -25,7 +25,7 @@ Thread.prototype.cleanUp = function() {
       allowedAttributes: {}
     }),
     createdDate: new Date(),
-    author: ObjectID(userid)
+    author: ObjectID(this.userid)
   };
 };
 
