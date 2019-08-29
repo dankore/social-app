@@ -27,6 +27,7 @@
         action="/thread-delete"
         method="POST"
       >
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button
           class="delete-post-button text-danger"
           data-toggle="tooltip"
