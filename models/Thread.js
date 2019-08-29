@@ -76,7 +76,7 @@ Thread.find = function(id) {
     }
     let threads = await threadCollection
       .aggregate([
-        { $match: { author: new ObjectID(id) } },
+        { $match: { } },
         {
           $lookup: {
             from: "users",
