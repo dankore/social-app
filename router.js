@@ -9,7 +9,7 @@ const threadController = require("./controllers/threadController");
 
 // Comments related routes
 // router.get("/comments", userController.mustBeLoggedIn, commentController.show);
-router.post("/comments", userController.mustBeLoggedIn, commentController.create);
+router.post("/comments", userController.mustBeLoggedIn, commentsController.create);
 
 
 // Thread related routes
