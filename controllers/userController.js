@@ -2,8 +2,6 @@ const User = require("../models/User");
 const Post = require("../models/Post");
 const Follow = require("../models/Follow");
 const jwt = require('jsonwebtoken')
-sendgrid.setApiKey(process.env.SENDGRIDAPIKEY)
-
 
 
 exports.apiGetPostsByUsername = async function(req, res) {
