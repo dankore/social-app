@@ -10,5 +10,11 @@ let Comments = function(data){
   this.errors = []
 }
 
+Comments.prototype.create = function(){
+return new Promise(async(resolve, reject)=>{
+  let comment = await commentsCollection.insertOne(this.data);
+  if(comment){resolve(comment)}else{(reject()}
+  });
+}
 
 module.exports = Comments
