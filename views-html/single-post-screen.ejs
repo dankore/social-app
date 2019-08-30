@@ -48,4 +48,25 @@
   </div>
 </div>
 
+<div class="container py-md-5 container--narrow">
+  <div id="comments-receiver" class="">
+    <p>First comment!</p>
+  </div>
+  <form id="comments-form" action="/create-comment" method="POST" class="form-group">
+    <label class="block pt-2"
+      ><strong class="mb-1">Add a comment!</strong>
+      <div class="form-group mb-2">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <textarea id="comments-textarea" class="" name="comment" rows="4"></textarea>
+        <div class="flex">
+          <!-- <input type="hidden" name="post._id" value="<%= post._id %>"> -->
+          <button type="submit" class="btn-primary">
+            Submit
+          </button>
+        </div>
+      </div>
+    </label>
+  </form>
+</div
+
 <%- include('includes/footer') %>
