@@ -127,13 +127,6 @@ exports.register = function(req, res) {
         avatar: user.avatar,
         _id: user.data._id
       };
-     sendgrid.send({
-        to: "adamu.dankore@gmail.com",
-        from: "adamu.dankore@gmail.com",
-        subject: 'New user alert!',
-        text: 'Thank you for regisering on the GSS gwarinpa Network. Happy networking!',
-        html: 'Thank you for regisering on the GSS gwarinpa Network. Happy networking!' // Use backticks to dynamically do stuff
-       })
       req.session.save(function() {
         res.redirect("/");
       });
