@@ -7,6 +7,11 @@ const followController = require("./controllers/followController");
 const threadController = require("./controllers/threadController");
 
 
+// Comments related routes
+// router.get("/comments", userController.mustBeLoggedIn, commentController.show);
+router.post("/comments", userController.mustBeLoggedIn, commentController.create);
+
+
 // Thread related routes
 router.get("/thread", userController.mustBeLoggedIn, threadController.show);
 router.post("/thread", userController.mustBeLoggedIn, threadController.create);
