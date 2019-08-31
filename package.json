@@ -36,6 +36,8 @@
     "socket.io": "^2.2.0",
     "validator": "^11.1.0",
     "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.6",
+    "netlify-lambda": "^0.4.0",
+    "serverless-http": "^1.6.0"
   }
 }
