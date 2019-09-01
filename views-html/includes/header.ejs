@@ -9,28 +9,31 @@
   <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js" integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
   <link rel="stylesheet" href="/main.css">
-  <!-- Global site tag (gtag.js) - Google Analytics --> 
+  <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-66TP4J6DG7"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-66TP4J6DG7'); </script>
 </head>
 <body>
   <header class="header-bar bg-success py-3">
     <div class="container d-flex flex-column flex-md-row align-items-center p-3">
-      <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">GSS Gwarinpa Network</a></h4>
+      <h4 class="my-0 mr-md-auto text-center font-weight-normal"><a href="/" class="text-white">GSS Gwarinpa Network</a></h4>
           <% if (user) { %>
-          
-        <div class="flex-row my-3 my-md-0"><a class="btn btn-sm bg-white mb-md-0 mt-md-0 mr-md-2" href="/thread">Thread</a></div>
-        <a href="#" class="text-white mr-2 header-search-icon" title="Search" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-search"></i></a>
-        <span class="text-white mr-2 header-chat-icon" title="Chat" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-comment"></i></span>
-        
-        <a href="/profile/<%= user.username %>" class="mr-2"><img title="My Profile" data-toggle="tooltip" data-placement="bottom" style="width: 32px; height: 32px; border-radius: 16px;" src="<%= user.avatar %>"></a>
+
+
+        <div class="d-flex align-items-center">
+            <a class="text-white header-thread-icon mr-2" href="/thread" title="Thread" data-toggle="tooltip" data-placement="bottom"><i style="width: 30px; height: 30px; border-radius: 16px;" class="far fa-comment-alt"></i></a>
+            <a href="#" class="text-white mr-2 header-search-icon" title="Search" data-toggle="tooltip" data-placement="bottom"><i  style="width: 30px; height: 30px; border-radius: 16px;" class="fas fa-search"></i></a>
+            <span class="text-white mr-2 header-chat-icon" title="Chat" data-toggle="tooltip" data-placement="bottom"><i  style="width: 30px; height: 30px; border-radius: 16px;" class="fas fa-comment"></i></span>
+            <a href="/profile/<%= user.username %>" class="mr-2"><img title="My Profile" data-toggle="tooltip" data-placement="bottom" style="width: 35px; height: 35px; border-radius: 16px;" src="<%= user.avatar %>"></a>
+        </div>
+
         <a class="btn btn-sm btn-primary mb-2 mt-2 mb-md-0 mt-md-0 mr-md-2" href="/create-post">Create Post</a>
-        
+
         <form action="/logout" method="POST" class="d-inline">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <button class="btn btn-sm btn-secondary">Sign Out</button>
         </form>
-      </div>  
-              
+      </div>
+
          <% } else { %>
               <form action="/login" method="POST" class="mb-0 pt-2 pt-md-0">
           <div class="row align-items-center">
@@ -58,6 +61,6 @@
           </div>
         </form>
          <% }%>
-       
+
     </div>
   </header>
