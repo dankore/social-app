@@ -21,6 +21,10 @@ body, .tooltip
   position: relative;
   top: 3px;
 }
+.header-thread-icon {
+  position: relative;
+  top: 3px;
+}
 
 .avatar-small {
   width: 32px;
