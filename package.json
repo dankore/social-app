@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "netlify-lambda build express",
+    "build": "netlify-lambda build public/ && webpack --watch",
     "watch": "nodemon db --ignore frontend-js --ignore public/ && webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
