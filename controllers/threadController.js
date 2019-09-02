@@ -3,7 +3,7 @@ const Post = require("../models/Post");
 const User = require("../models/User");
 
 exports.down = function(req, res){
-  res.send('Sorry, Thread is down for maintenance. Up GSS Gwarinpa!')
+  res.render('down')
 }
 
 exports.show = async function(req, res) {
