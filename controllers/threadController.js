@@ -2,6 +2,10 @@ const Thread = require("../models/Thread");
 const Post = require("../models/Post");
 const User = require("../models/User");
 
+exports.down = function(req, res){
+  res.send('Sorry, Thread is down for maintenance. Up GSS Gwarinpa!')
+}
+
 exports.show = async function(req, res) {
   // fetch feed of threads for current user
   try {
