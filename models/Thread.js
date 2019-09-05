@@ -145,7 +145,6 @@ Thread.findSingle = function(id) {
 // };
 
 Thread.delete = (threadIdToDelete, currentUserId) => {
-  // console.log(threadIdToDelete, currentUserId);
   return new Promise(async (resolve, reject) => {
     try {
 
