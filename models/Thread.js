@@ -94,5 +94,16 @@ Thread.find = function(id) {
   });
 };
 
+Thread.delete = (threadIdToDelete)=>{
+    return new Promise(async (resolve, reject)=>{
+        try {
+            await threadCollection.deleteOne()
+             resolve()
+        }catch{
+            reject()
+        }
+})
+}
+
 
 module.exports = Thread;

@@ -12,12 +12,29 @@
           <a href="/profile/<%= thread.author.username %>"><%= thread.author.username %></a>
         </div>
         <div>
-          <p class="block"> 
-              <%= thread.createdDate.getMonth() + 1 %>/<%= thread.createdDate.getDate() %>/<%=thread.createdDate.getFullYear() %> 
+          <p class="block">
+              <%= thread.createdDate.getMonth() + 1 %>/<%= thread.createdDate.getDate() %>/<%=thread.createdDate.getFullYear() %>
             </p>
         </div>
       </div>
-      <p class="my-1 text-3xl"><%= thread.thread %></p>
+      <div class="d-flex justify-content-between align-items-end">
+        <p class="my-1 text-3xl"><%= thread.thread %></p>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <form
+        class="d-inline"
+        action="/delete"
+        method="POST"
+      >
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button
+        data-toggle="tooltip"
+        data-placement="top"
+        class="btn btn-danger btn-sm"
+        >
+        <i class="far fa-trash-alt"></i>
+        </button>
+      </form>
+      </div>
     </div>
     <% }) %>
     <form id="thread-form" action="/thread" method="POST" class="d-flex mt-4 flex-column">

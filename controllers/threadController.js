@@ -21,11 +21,22 @@ exports.create = (req, res) => {
   thread
     .create()
     .then(() => {
-      req.session.save(() => res.redirect("thread"));
+      req.session.save(() => res.redirect("threads"));
     })
     .catch(errors => {
       errors.forEach(error => req.flash("errors", error));
-      req.session.save(() => res.redirect("/thread"));
+      req.session.save(() => res.redirect("/threads"));
     });
 };
+
+exports.delete1 = (req, res)=>{
+    console.log(req.body)
+        Thread.delete(req.body.id).then(()=>{
+            req.session.save(() => res.redirect("/threads"));
+        }).catch(()=>{
+            req.flash("errors", "You do not have permission to perform that action");
+            req.session.save(() => res.redirect("/thread"));
+        })
+}
+
 
