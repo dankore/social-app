@@ -30,13 +30,18 @@ exports.create = (req, res) => {
 };
 
 exports.delete1 = (req, res)=>{
-    console.log(req.body)
-        Thread.delete(req.body.id).then(()=>{
+    // console.log(req.body.threadId);
+        Thread.delete(req.body.threadId, req.visitorId)
+          .then(() => {
             req.session.save(() => res.redirect("/threads"));
-        }).catch(()=>{
-            req.flash("errors", "You do not have permission to perform that action");
-            req.session.save(() => res.redirect("/thread"));
-        })
+          })
+          .catch(() => {
+            req.flash(
+              "errors",
+              "You do not have permission to perform that action"
+            );
+            req.session.save(() => res.redirect("/threads"));
+          });
 }
 
 

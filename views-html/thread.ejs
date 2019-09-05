@@ -22,11 +22,14 @@
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <form
         class="d-inline"
-        action="/delete"
+        action="/threads"
         method="POST"
       >
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <input type="hidden" name="threadId" value="<%= thread._id %>">
       <button
+        class="delete-me"
+        
         data-toggle="tooltip"
         data-placement="top"
         class="btn btn-danger btn-sm"

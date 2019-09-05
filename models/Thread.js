@@ -94,16 +94,17 @@ Thread.find = function(id) {
   });
 };
 
-Thread.delete = (threadIdToDelete)=>{
-    return new Promise(async (resolve, reject)=>{
-        try {
-            await threadCollection.deleteOne()
-             resolve()
-        }catch{
-            reject()
-        }
-})
-}
+Thread.delete = (threadIdToDelete, currentUserId) => {
+  console.log(threadIdToDelete, currentUserId, username);
+  return new Promise(async (resolve, reject) => {
+    try {
+      let thread = await threadCollection.deleteOne(threadIdToDelete);
+      resolve(thread);
+    } catch {
+      reject();
+    }
+  });
+};
 
 
 module.exports = Thread;
