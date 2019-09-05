@@ -94,12 +94,72 @@ Thread.find = function(id) {
   });
 };
 
+Thread.findSingle = function(id) {
+  return new Promise(async (resolve, reject) => {
+    if (typeof id != "string" || !ObjectID.isValid(id)) {
+      reject();
+      return;
+    }
+    let threads = await threadCollection
+      .aggregate([
+        { $match: {} },
+        {
+          $lookup: {
+            from: "users",
+            localField: "author",
+            foreignField: "_id",
+            as: "authorDocument"
+          }
+        },
+        {
+          $project: {
+            thread: 1,
+            createdDate: 1,
+            authorId: "$author",
+            author: { $arrayElemAt: ["$authorDocument", 0] }
+          }
+        }
+      ])
+      .toArray();
+    // let threads = await threadCollection.aggregate(aggOperations).toArray();
+    // Cleanup author property in each thread object
+    // threads = threads.map(function(thread) {
+    //   thread.isVisitorOwner = thread.authorId.equals(visitorId);
+    //   thread.authorId = undefined;
+    threads = threads.map(function(thread) {
+      thread.author = {
+        username: thread.author.username,
+        avatar: new User(thread.author, true).avatar
+      };
+      return thread;
+    });
+    resolve(threads);
+  });
+};
+
+// Thread.findByAuthorId = authorId => {
+//   return Thread.findSingle([
+//     { $match: { author: authorId } },
+//     { $sort: { createdDate: -1 } }
+//   ]);
+// };
+
 Thread.delete = (threadIdToDelete, currentUserId) => {
-  console.log(threadIdToDelete, currentUserId, username);
+  // console.log(threadIdToDelete, currentUserId);
   return new Promise(async (resolve, reject) => {
     try {
-      let thread = await threadCollection.deleteOne(threadIdToDelete);
-      resolve(thread);
+      let threadss = await Thread.findSingle(currentUserId)
+        console.log(threadss);
+        threadss.map(threadz=>{
+         threadz.isVisitorOwner = threadz.authorId.equals(currentUserId);
+          console.log(threadz)
+        })
+        // if (thread.isVisitorOwner) {
+         let thread = await threadCollection.deleteOne(threadIdToDelete)
+          resolve(thread)
+        // } else {
+        //   reject();
+        // }
     } catch {
       reject();
     }
