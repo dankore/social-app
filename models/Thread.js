@@ -147,14 +147,13 @@ Thread.findSingle = function(id) {
 Thread.delete = (threadIdToDelete, currentUserId) => {
   return new Promise(async (resolve, reject) => {
     try {
-
         let threadss = await Thread.findSingle(currentUserId)
         threadss.map(threadz=>{
          threadz.isVisitorOwner = threadz.authorId.equals(currentUserId);
         
         if (threadz.isVisitorOwner) {
-         let thread = threadCollection.deleteOne({_id: new ObjectID(threadIdToDelete)})
-          resolve(thread)
+        threadCollection.deleteOne({_id: new ObjectID(threadIdToDelete)})
+          resolve()
         } else {
           reject();
         }

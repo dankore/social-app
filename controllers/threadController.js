@@ -2,9 +2,9 @@ const Thread = require("../models/Thread");
 const Post = require("../models/Post");
 const User = require("../models/User");
 
-exports.down = function(req, res){
-  res.render('down')
-}
+exports.down = function(req, res) {
+  res.render("down");
+};
 
 exports.show = async function(req, res) {
   // fetch feed of threads for current user
@@ -29,18 +29,13 @@ exports.create = (req, res) => {
     });
 };
 
-exports.delete1 = (req, res)=>{
-        Thread.delete(req.body.threadId, req.visitorId)
-          .then(() => {
-            req.session.save(() => res.redirect("/threads"));
-          })
-          .catch(() => {
-            req.flash(
-              "errors",
-              "You do not have permission to perform that action"
-            );
-            req.session.save(() => res.redirect("/threads"));
-          });
-}
-
-
+exports.delete1 = (req, res) => {
+  Thread.delete(req.body.threadId, req.visitorId)
+    .then(() => {
+      req.session.save(() => res.redirect("/threads"));
+    })
+    .catch(() => {
+      req.flash("errors", "You do not have permission to perform that action");
+      req.session.save(() => res.redirect("/threads"));
+    });
+};
