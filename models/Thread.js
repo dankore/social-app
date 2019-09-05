@@ -148,21 +148,22 @@ Thread.delete = (threadIdToDelete, currentUserId) => {
   // console.log(threadIdToDelete, currentUserId);
   return new Promise(async (resolve, reject) => {
     try {
-      let threadss = await Thread.findSingle(currentUserId)
-        console.log(threadss);
+
+        let threadss = await Thread.findSingle(currentUserId)
         threadss.map(threadz=>{
          threadz.isVisitorOwner = threadz.authorId.equals(currentUserId);
-          console.log(threadz)
-        })
-        // if (thread.isVisitorOwner) {
-         let thread = await threadCollection.deleteOne(threadIdToDelete)
+        
+        if (threadz.isVisitorOwner) {
+         let thread = threadCollection.deleteOne({_id: new ObjectID(threadIdToDelete)})
           resolve(thread)
-        // } else {
-        //   reject();
-        // }
+        } else {
+          reject();
+        }
+      })
     } catch {
       reject();
     }
+    
   });
 };
 
