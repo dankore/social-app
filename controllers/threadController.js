@@ -30,7 +30,7 @@ exports.create = (req, res) => {
     });
 };
 
-exports.delete1 = (req, res) => {
+exports.deleteItem = (req, res) => {
   Thread.delete(req.body.threadId, req.visitorId)
     .then(() => {
       req.session.save(() => res.redirect("/threads"));

@@ -10,7 +10,7 @@ const threadController = require("./controllers/threadController");
 // Thread related routes
 router.get("/thread", userController.mustBeLoggedIn, threadController.down);
 router.post("/thread", userController.mustBeLoggedIn, threadController.create);
-router.post("/threads", userController.mustBeLoggedIn, threadController.delete1);
+router.post("/threads", userController.mustBeLoggedIn, threadController.deleteItem);
 router.get("/threads", userController.mustBeLoggedIn, threadController.show);
 
 
