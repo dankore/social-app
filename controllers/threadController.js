@@ -10,6 +10,7 @@ exports.show = async function(req, res) {
   // fetch feed of threads for current user
   try {
     let threadz = await Thread.find(req.session.user._id);
+    console.log(threadz.map(thread=>{return thread.isVisitorOwner}))
     res.render("thread", { threads: threadz });
   } catch {
     res.send("Problem from threadController show fn.");

@@ -55,9 +55,70 @@ Thread.prototype.create = function() {
   });
 };
 
-
-Thread.find = function(id) {
+Thread.reusablePostQuery = function(uniqueOperations, visitorId) {
   return new Promise(async (resolve, reject) => {
+    let aggOperations = uniqueOperations.concat([
+      {
+        $lookup: {
+          from: "users",
+          localField: "author",
+          foreignField: "_id",
+          as: "authorDocument"
+        }
+      },
+      {
+        $project: {
+          thread: 1,
+          createdDate: 1,
+          authorId: "$author",
+          author: { $arrayElemAt: ["$authorDocument", 0] }
+        }
+      }
+    ]);
+    let threads = await threadCollection.aggregate(aggOperations).toArray();
+    // console.log(threads)
+
+    // Cleanup author property in each post object
+    threads = threads.map( function(thread) {
+    //   thread.isVisitorOwner = thread.authorId.equals();
+      thread.authorId = undefined;
+      thread.author = {
+        username: thread.author.username,
+        // avatar: new User(post.author, true).avatar
+      };
+      return thread;
+    });
+    resolve(threads);
+  });
+};
+
+
+
+
+
+
+
+Thread.findSingleById = function(id, visitorId) {
+  return new Promise(async (resolve, reject) => {
+    if (typeof id != "string" || !ObjectID.isValid(id)) {
+      reject();
+      return;
+    }
+    let threads = await Post.reusablePostQuery(
+      [{ $match: {} }],
+      visitorId
+    );
+    if (threads.length) {
+    //   console.log(threads[0]);
+      resolve(threads[0]);
+    } else {
+      reject();
+    }
+  });
+};
+// make this reuseable
+Thread.find = function(id, visitorId) {
+return new Promise(async (resolve, reject) => {
     if (typeof id != "string" || !ObjectID.isValid(id)) {
       reject();
       return;
@@ -77,65 +138,156 @@ Thread.find = function(id) {
           $project: {
             thread: 1,
             createdDate: 1,
+             authorId: "$author",
             author: { $arrayElemAt: ["$authorDocument", 0] }
           }
         }
       ])
       .toArray();
+//    let threads = await threadCollection.aggregate().toArray();
     // Cleanup author property in each thread object
     threads = threads.map(function(thread) {
+      thread.isVisitorOwner = thread.authorId.equals(id);
+      thread.authorId = undefined;
       thread.author = {
         username: thread.author.username,
         avatar: new User(thread.author, true).avatar
       };
       return thread;
     });
-    resolve(threads)
+    // console.log(threads)
+    resolve(threads);
+  })
+}
+
+
+Thread.delete = (threadIdToDelete, currentUserId) => {
+    //  console.log(threadIdToDelete, currentUserId)
+  return new Promise(async (resolve, reject) => {
+    try {
+      let threads = await Thread.find(currentUserId);
+      threads.map(async thread =>{
+        //   console.log(thread.isVisitorOwner)
+        if (thread.isVisitorOwner) {
+        await threadCollection.deleteOne({ _id: new ObjectID(threadIdToDelete) });
+        resolve();
+      } else {
+        reject();
+      }
+
+      })
+
+    } catch {
+      reject();
+    }
   });
 };
 
-Thread.findSingle = function(id) {
-  return new Promise(async (resolve, reject) => {
-    if (typeof id != "string" || !ObjectID.isValid(id)) {
-      reject();
-      return;
-    }
-    let threads = await threadCollection
-      .aggregate([
-        { $match: {} },
-        {
-          $lookup: {
-            from: "users",
-            localField: "author",
-            foreignField: "_id",
-            as: "authorDocument"
-          }
-        },
-        {
-          $project: {
-            thread: 1,
-            createdDate: 1,
-            authorId: "$author",
-            author: { $arrayElemAt: ["$authorDocument", 0] }
-          }
-        }
-      ])
-      .toArray();
-    // let threads = await threadCollection.aggregate(aggOperations).toArray();
-    // Cleanup author property in each thread object
-    // threads = threads.map(function(thread) {
-    //   thread.isVisitorOwner = thread.authorId.equals(visitorId);
-    //   thread.authorId = undefined;
-    threads = threads.map(function(thread) {
-      thread.author = {
-        username: thread.author.username,
-        avatar: new User(thread.author, true).avatar
-      };
-      return thread;
-    });
-    resolve(threads);
-  });
-};
+
+// Thread.delete = (threadIdToDelete, currentUserId) => {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       let threads = await Thread.find(threadIdToDelete, currentUserId);
+//         threads.map(async thread=>{
+//             // console.log(thread, thread.isVisitorOwner)
+//             if (thread.isVisitorOwner) {
+//               await ThreadCollection.deleteOne({ _id: new ObjectID(threadIdToDelete) });
+//                     resolve();
+//                 } else {
+//                     reject();
+//                 }
+//         })
+
+//     } catch {
+//       reject();
+//     }
+//   });
+// };
+
+
+
+
+
+// Thread.find = function(id) {
+//   return new Promise(async (resolve, reject) => {
+//     if (typeof id != "string" || !ObjectID.isValid(id)) {
+//       reject();
+//       return;
+//     }
+//     let threads = await threadCollection
+//       .aggregate([
+//         { $match: { } },
+//         {
+//           $lookup: {
+//             from: "users",
+//             localField: "author",
+//             foreignField: "_id",
+//             as: "authorDocument"
+//           }
+//         },
+//         {
+//           $project: {
+//             thread: 1,
+//             createdDate: 1,
+//             author: { $arrayElemAt: ["$authorDocument", 0] }
+//           }
+//         }
+//       ])
+//       .toArray();
+//     // Cleanup author property in each thread object
+//     threads = threads.map(function(thread) {
+//       thread.author = {
+//         username: thread.author.username,
+//         avatar: new User(thread.author, true).avatar
+//       };
+//       return thread;
+//     });
+//     resolve(threads)
+//   });
+// };
+
+// Thread.findSingle = function(id) {
+//   return new Promise(async (resolve, reject) => {
+//     if (typeof id != "string" || !ObjectID.isValid(id)) {
+//       reject();
+//       return;
+//     }
+//     let threads = await threadCollection
+//       .aggregate([
+//         { $match: {} },
+//         {
+//           $lookup: {
+//             from: "users",
+//             localField: "author",
+//             foreignField: "_id",
+//             as: "authorDocument"
+//           }
+//         },
+//         {
+//           $project: {
+//             thread: 1,
+//             createdDate: 1,
+//             authorId: "$author",
+//             author: { $arrayElemAt: ["$authorDocument", 0] }
+//           }
+//         }
+//       ])
+//       .toArray();
+//     // let threads = await threadCollection.aggregate(aggOperations).toArray();
+//     // Cleanup author property in each thread object
+//     // threads = threads.map(function(thread) {
+//     //   thread.isVisitorOwner = thread.authorId.equals(visitorId);
+//     //   thread.authorId = undefined;
+//     threads = threads.map(function(thread) {
+//       thread.author = {
+//         username: thread.author.username,
+//         avatar: new User(thread.author, true).avatar
+//       };
+//       return thread;
+//     });
+//     resolve(threads);
+//   });
+// };
 
 // Thread.findByAuthorId = authorId => {
 //   return Thread.findSingle([
@@ -144,26 +296,22 @@ Thread.findSingle = function(id) {
 //   ]);
 // };
 
-Thread.delete = (threadIdToDelete, currentUserId) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-        let threadss = await Thread.findSingle(currentUserId)
-        threadss.map(threadz=>{
-         threadz.isVisitorOwner = threadz.authorId.equals(currentUserId);
-        
-        if (threadz.isVisitorOwner) {
-        threadCollection.deleteOne({_id: new ObjectID(threadIdToDelete)})
-          resolve()
-        } else {
-          reject();
-        }
-      })
-    } catch {
-      reject();
-    }
-    
-  });
-};
+// Thread.delete = (threadIdToDelete, currentUserId) => {
+//   return new Promise(async (resolve, reject) => {
+//         let threadss = await Thread.findSingle(currentUserId)
+//         threadss.map(threadz=>{
+//          threadz.isVisitorOwner = threadz.authorId.equals(currentUserId);
+
+//         if (threadz.isVisitorOwner) {
+//         let thread = threadCollection.deleteOne({_id: new ObjectID(threadIdToDelete)})
+//           resolve(thread)
+//         } else {
+//           reject();
+//         }
+//       })
+//   });
+// };
+
 
 
 module.exports = Thread;

@@ -20,6 +20,7 @@
       <div class="d-flex justify-content-between align-items-end">
         <p class="my-1 text-3xl"><%= thread.thread %></p>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+     <% if (thread.isVisitorOwner) { %>
     <form
         class="d-inline"
         action="/threads"
@@ -29,7 +30,7 @@
       <input type="hidden" name="threadId" value="<%= thread._id %>">
       <button
         class="delete-me"
-        
+
         data-toggle="tooltip"
         data-placement="top"
         class="btn btn-danger btn-sm"
@@ -37,6 +38,7 @@
         <i class="far fa-trash-alt"></i>
         </button>
       </form>
+    <% } %>
       </div>
     </div>
     <% }) %>
