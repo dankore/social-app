@@ -285,6 +285,14 @@ textarea.tall-textarea {
   opacity: 1;
   transform: translateY(0)
 }
+.edit-form {
+    visibility: hidden;
+}
+.edit-form--visible {
+    visibility: visible;
+}
+
+
 
 .chat-title-bar {
   background-color: #292929;
