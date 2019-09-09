@@ -16,6 +16,8 @@ router.get("/threads", userController.mustBeLoggedIn, threadController.show);
 
 
 
+
+
 // User related routes
 router.get("/", userController.home);
 router.post("/register", userController.register);
