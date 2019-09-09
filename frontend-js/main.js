@@ -1,7 +1,6 @@
 import Search from "./modules/search";
 import Chat from "./modules/chat";
 import RegistrationForm from "./modules/registrationForm";
-import axios from "axios";
 import Thread from './modules/thread-edit'
 
 if (document.querySelector("#registration-form")) {
@@ -15,6 +14,6 @@ if (document.querySelector(".header-search-icon")) {
   new Search();
 }
 
-// if(document.querySelector('.edit-form')){
-//     new Thread()
-// }
+if(document.querySelector('.edit-form')){
+    new Thread()
+}

@@ -286,10 +286,12 @@ textarea.tall-textarea {
   transform: translateY(0)
 }
 .edit-form {
-    visibility: hidden;
+  display: none;
+    opacity: 0;
 }
 .edit-form--visible {
-    visibility: visible;
+  display: block;
+  opacity: 1;
 }
 
 

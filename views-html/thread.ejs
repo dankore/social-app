@@ -23,7 +23,7 @@
      <% if (thread.isVisitorOwner) { %>
 
      <form
-        class="edit-form d-inline mr-2"
+        class="edit-form mr-2"
         action="/thread-edit"
         method="POST"
       >
@@ -31,7 +31,7 @@
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
         <input type="hidden" name="threadId" value="<%= thread._id %>"> <br />
         <button class="mb-5 btn btn-info" aria-pressed="true">Submit </button>
-        <button class="mb-5 btn btn-secondary" aria-pressed="true">Cancel</button>
+        <button class="close-button mb-5 btn btn-secondary" aria-pressed="true">Cancel</button>
     </form>
 
     <div>
@@ -46,7 +46,7 @@
         <i class="far fa-edit"></i>
      </button>
     <form
-        class="w-100 d-inline"
+        class="d-inline"
         action="/threads"
         method="POST"
       >
