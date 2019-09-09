@@ -21,14 +21,20 @@
         <p class="my-1 text-3xl"><%= thread.thread %></p>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
      <% if (thread.isVisitorOwner) { %>
-    <div>
-      <form
+
+     <form
         class="d-inline mr-2"
-        action="#"
+        action="/thread-edit"
         method="POST"
       >
+        <textarea name="thread" rows="4"><%= thread.thread %></textarea>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <input type="hidden" name="threadId" value="<%= thread._id %>">
+        <button class="mb-5 btn btn-info" aria-pressed="true">Submit thread</button>
+    </form>
+
+    <div>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <input type="hidden" name="threadId" value="<%= thread._id %>">
       <button
         class="delete-thread-button text-primary"
         data-toggle="tooltip"
@@ -36,8 +42,7 @@
         class="btn btn-danger btn-sm"
         >
         <i class="far fa-edit"></i>
-        </button>
-      </form>
+     </button>
     <form
         class="d-inline"
         action="/threads"

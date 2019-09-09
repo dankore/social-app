@@ -13,6 +13,9 @@ router.post("/thread", userController.mustBeLoggedIn, threadController.create);
 router.post("/threads", userController.mustBeLoggedIn, threadController.deleteItem);
 router.get("/threads", userController.mustBeLoggedIn, threadController.show);
 
+router.post("/thread-edit", userController.mustBeLoggedIn, threadController.editItem);
+
+
 
 
 

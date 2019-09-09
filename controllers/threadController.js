@@ -40,3 +40,28 @@ exports.deleteItem = (req, res) => {
       req.session.save(() => res.redirect("/threads"));
     });
 };
+
+exports.editItem = (req, res) => {
+    // console..threadffeyylog(req.body)
+  Thread.edit(req.body, req.body.threadId, req.visitorId)
+    .then((status) => {
+        if(status = "success") {
+            req.flash("success", "Thread successfully updated.");
+            req.session.save(() => res.redirect("/threads"));
+
+        } else {
+        req.errors.forEach(error => {
+          req.flash("errors", error);
+        });
+        req.session.save(() => {
+          res.redirect('/threads');
+        });
+
+        }
+
+    })
+    .catch(() => {
+      req.flash("errors", "You do not have permission to perform that action");
+      req.session.save(() => res.redirect("/threads"));
+    });
+};

@@ -113,6 +113,24 @@ Thread.delete = (threadIdToDelete, currentUserId) => {
   });
 };
 
+Thread.edit = (textareaContent, threadIdToEdit, currentUserId) => {
+    console.log(textareaContent.thread)
+  return new Promise(async (resolve, reject) => {
+    try {
+        let threads = await Thread.find(currentUserId);
+        threads.map(async thread =>{
+            console.log(thread.thread)
+        if (thread.isVisitorOwner) {
+        await threadCollection.findOneAndUpdate(
+        { _id: new ObjectID(threadIdToEdit) },
+        { $set: { thread: textareaContent.thread } });
+            resolve("success");
+        }})
+      } catch {
+        reject();
+      }
+  });
+};
 
 
 module.exports = Thread;
