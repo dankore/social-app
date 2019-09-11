@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="d-flex justify-content-between align-items-end">
-        <p class="my-1 text-3xl"><%= thread.thread %></p>
+        <p class="my-1 each-thread text-3xl"><%= thread.thread %></p>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
      <% if (thread.isVisitorOwner) { %>
     <form
@@ -42,7 +42,7 @@
     <% }) %>
     <form id="thread-form" action="/thread" method="POST" class="d-flex mt-4 flex-column">
       <p class="mb-0 text-white">Add to the thread</p>
-      <textarea name="thread" rows="4"></textarea>
+      <textarea id="textarea-thread" name="thread" rows="4"></textarea>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
     <button class="mb-5 btn btn-info" aria-pressed="true">Submit</button>
     </form>
