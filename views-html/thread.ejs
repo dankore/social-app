@@ -12,17 +12,37 @@
           <a href="/profile/<%= thread.author.username %>"><%= thread.author.username %></a>
         </div>
         <div>
-          <p class="block"> 
-              <%= thread.createdDate.getMonth() + 1 %>/<%= thread.createdDate.getDate() %>/<%=thread.createdDate.getFullYear() %> 
+          <p class="block">
+              <%= thread.createdDate.getMonth() + 1 %>/<%= thread.createdDate.getDate() %>/<%=thread.createdDate.getFullYear() %>
             </p>
         </div>
       </div>
-      <p class="my-1 text-3xl"><%= thread.thread %></p>
+      <div class="d-flex justify-content-between align-items-end">
+        <p class="my-1 each-thread text-3xl"><%= thread.thread %></p>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+     <% if (thread.isVisitorOwner) { %>
+    <form
+        class="d-inline"
+        action="/threads"
+        method="POST"
+      >
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <input type="hidden" name="threadId" value="<%= thread._id %>">
+      <button
+        class="delete-thread-button text-danger"
+        data-toggle="tooltip"
+        data-placement="top"
+        >
+        <i class="far fa-trash-alt"></i>
+        </button>
+      </form>
+    <% } %>
+      </div>
     </div>
     <% }) %>
     <form id="thread-form" action="/thread" method="POST" class="d-flex mt-4 flex-column">
       <p class="mb-0 text-white">Add to the thread</p>
-      <textarea name="thread" rows="4"></textarea>
+      <textarea id="textarea-thread" name="thread" rows="4"></textarea>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
     <button class="mb-5 btn btn-info" aria-pressed="true">Submit</button>
     </form>

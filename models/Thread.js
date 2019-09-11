@@ -56,8 +56,8 @@ Thread.prototype.create = function() {
 };
 
 
-Thread.find = function(id) {
-  return new Promise(async (resolve, reject) => {
+Thread.find = function(id, visitorId) {
+return new Promise(async (resolve, reject) => {
     if (typeof id != "string" || !ObjectID.isValid(id)) {
       reject();
       return;
@@ -77,6 +77,7 @@ Thread.find = function(id) {
           $project: {
             thread: 1,
             createdDate: 1,
+             authorId: "$author",
             author: { $arrayElemAt: ["$authorDocument", 0] }
           }
         }
@@ -84,15 +85,34 @@ Thread.find = function(id) {
       .toArray();
     // Cleanup author property in each thread object
     threads = threads.map(function(thread) {
+      thread.isVisitorOwner = thread.authorId.equals(id);
+      thread.authorId = undefined;
       thread.author = {
         username: thread.author.username,
         avatar: new User(thread.author, true).avatar
       };
       return thread;
     });
-    resolve(threads)
+    resolve(threads);
+  })
+}
+
+
+Thread.delete = (threadIdToDelete, currentUserId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+        let threads = await Thread.find(currentUserId);
+        threads.map(async thread =>{
+        if (thread.isVisitorOwner) {
+            await threadCollection.deleteOne({ _id: new ObjectID(threadIdToDelete) });
+            resolve();
+        }})
+      } catch {
+        reject();
+      }
   });
 };
+
 
 
 module.exports = Thread;
