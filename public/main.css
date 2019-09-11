@@ -136,6 +136,9 @@ textarea.tall-textarea {
   overflow-wrap: break-word;
   min-width: 0px;
 }
+.submit-button{
+  width: 120px;
+}
 
 /* Search Overaly */
 .search-overlay {

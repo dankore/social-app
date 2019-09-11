@@ -42,9 +42,9 @@
     <% }) %>
     <form id="thread-form" action="/thread" method="POST" class="d-flex mt-4 flex-column">
       <p class="mb-0 text-white">Add to the thread</p>
-      <textarea id="textarea-thread" name="thread" rows="4"></textarea>
+      <textarea class="p-2" id="textarea-thread" name="thread" rows="4" placeholder="Type your message here..."></textarea>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-    <button class="mb-5 btn btn-info" aria-pressed="true">Submit</button>
+    <button class="mb-5  submit-button btn btn-info" aria-pressed="true">Submit</button>
     </form>
   </div>
 </div>
