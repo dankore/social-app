@@ -17,10 +17,6 @@ router.post("/thread-edit", userController.mustBeLoggedIn, threadController.edit
 
 
 
-
-
-
-
 // User related routes
 router.get("/", userController.home);
 router.post("/register", userController.register);

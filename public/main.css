@@ -289,10 +289,10 @@ textarea.tall-textarea {
   display: none;
     opacity: 0;
 }
-.edit-form--visible {
+/* .edit-form--visible {
   display: block;
   opacity: 1;
-}
+} */
 
 
 
