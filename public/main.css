@@ -124,7 +124,7 @@ textarea.tall-textarea {
   }
 }
 
-.delete-post-button, .delete-thread-button {
+.delete-post-button {
   cursor: pointer;
   background: none;
   border: none;

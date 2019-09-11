@@ -18,8 +18,7 @@ exports.create = (req, res) => {
   thread
     .create()
     .then(() => {
-      req.flash("success", "New Thread successfully created.");
-      req.session.save(() => res.redirect("thread"));
+      req.session.save(() => res.redirect("threads"));
     })
     .catch(errors => {
       errors.forEach(error => req.flash("errors", error));
@@ -30,8 +29,7 @@ exports.create = (req, res) => {
 exports.deleteItem = (req, res) => {
   Thread.delete(req.body.threadId, req.visitorId)
     .then(() => {
-      req.flash("errors", "Thread successfully deleted.");
-      req.session.save(() => res.redirect("/thread"));
+      req.session.save(() => res.redirect("/threads"));
     })
     .catch(() => {
       req.flash("errors", "You do not have permission to perform that action");
