@@ -22,7 +22,7 @@
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
      <% if (thread.isVisitorOwner) { %>
       
-     <div id="edit-form" class="edit-form flex">
+     <div id="edit-form" class="edit-form position-relative">
       <form
           class="mr-2"
           action="/thread-edit"
@@ -31,9 +31,9 @@
           <textarea name="thread" rows="4"><%= thread.thread %></textarea>
           <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
           <input type="hidden" name="threadId" value="<%= thread._id %>"> <br />
-          <button class="mb-5 btn btn-info" aria-pressed="true">Submit </button>
+          <button class="btn btn-info" aria-pressed="true">Submit </button>
       </form>
-      <button class="thread-close-button mb-5 btn btn-secondary" aria-pressed="true">Cancel</button>
+      <button class="thread-close-button btn position-absolute btn-secondary" aria-pressed="true">Cancel</button>
     </div>
 
     <div>
