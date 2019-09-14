@@ -14,6 +14,6 @@ if (document.querySelector(".header-search-icon")) {
   new Search();
 }
 
-if(document.querySelector('.edit-button')){
+if(document.querySelectorAll('.edit-form')){
     new Thread()
 }
