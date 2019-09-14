@@ -23,6 +23,7 @@
      <% if (thread.isVisitorOwner) { %>
 
      <form
+        id="edit-form"
         class="edit-form mr-2"
         action="/thread-edit"
         method="POST"
@@ -37,8 +38,8 @@
     <div>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <button
-        id = "edit-button"
-        class="delete-thread-button text-primary"
+        id="edit-button"
+        class="delete-thread-button edit-button text-primary"
         data-toggle="tooltip"
         data-placement="top"
         class="btn btn-danger btn-sm"

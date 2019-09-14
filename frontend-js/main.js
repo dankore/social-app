@@ -1,7 +1,7 @@
 import Search from "./modules/search";
 import Chat from "./modules/chat";
 import RegistrationForm from "./modules/registrationForm";
-import Thread from './modules/thread-edit'
+import Thread from "./modules/thread-edit"
 
 if (document.querySelector("#registration-form")) {
   new RegistrationForm();
@@ -14,6 +14,6 @@ if (document.querySelector(".header-search-icon")) {
   new Search();
 }
 
-if(document.querySelector('.edit-form')){
+if(document.querySelector('.edit-button')){
     new Thread()
 }

@@ -1,15 +1,15 @@
 export default class Thread {
   constructor() {
-    this.editButton = document.querySelector("#edit-button");
-    this.editForm = document.querySelector(".edit-form");
-    this.events();
-  }
-  events() {
-    this.editButton.addEventListener("click", () => this.openEdit());
-  }
+    this.editButtons = document.querySelectorAll(".edit-button");
+    Array.from(this.editButtons).forEach(item=>{
+        return item.addEventListener('click', () => this.openEdit())
+    })
+    this.editForm = document.getElementByd("edit-form");
 
-  //Methods
-  openEdit() {
-    this.editForm.classList.add("edit-form--visible");
   }
+openEdit(){
+this.editForm.classList.add("edit-form--visible")
 }
+
+}
+
