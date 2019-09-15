@@ -10,7 +10,6 @@ exports.show = async function(req, res) {
   // fetch feed of threads for current user
   try {
     let threadz = await Thread.find(req.session.user._id);
-    console.log(threadz.map(thread=>{return thread.isVisitorOwner}))
     res.render("thread", { threads: threadz });
   } catch {
     res.send("Problem from threadController show fn.");
@@ -36,6 +35,31 @@ exports.deleteItem = (req, res) => {
     .then(() => {
       req.flash("errors", "Thread successfully deleted.")
       req.session.save(() => res.redirect("/threads"));
+    })
+    .catch(() => {
+      req.flash("errors", "You do not have permission to perform that action");
+      req.session.save(() => res.redirect("/threads"));
+    });
+};
+
+
+exports.editItem = (req, res) => {
+  Thread.edit(req.body, req.body.threadId, req.visitorId)
+    .then((status) => {
+        if(status = "success") {
+            req.flash("success", "Thread successfully updated.");
+            req.session.save(() => res.redirect("/threads"));
+
+        } else {
+        req.errors.forEach(error => {
+          req.flash("errors", error);
+        });
+        req.session.save(() => {
+          res.redirect('/threads');
+        });
+
+        }
+
     })
     .catch(() => {
       req.flash("errors", "You do not have permission to perform that action");
