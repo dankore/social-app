@@ -5,7 +5,7 @@
   <h1 class="py-3 text-white">Thread</h1>
   <div>
     <% threads.forEach(thread => { %>
-    <div style="overflow-wrap: break-word; min-width: 0px" class="bg-white p-3 border-bottom border-dark rounded">
+    <div style="overflow-wrap: break-word; min-width: 0px, position: relative" class="bg-white p-3 position-relative border-bottom border-dark rounded">
       <div class="d-flex flex-row justify-content-between">
         <div>
          <a href="/profile/<%=thread.author.username %>"><img class="avatar-tiny" src="<%= thread.author.avatar %>" /></a>
@@ -18,22 +18,23 @@
         </div>
       </div>
       <div class="d-flex justify-content-between align-items-end">
-        <p class="my-1 text-3xl"><%= thread.thread %></p>
+        <p class="my-1 thread-box text-3xl"><%= thread.thread %></p>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
      <% if (thread.isVisitorOwner) { %>
-      
-     <div id="edit-form" class="edit-form position-relative">
+
+     <div id="edit-form" class="edit-form">
       <form
           class="mr-2"
           action="/thread-edit"
           method="POST"
         >
-          <textarea name="thread" rows="4"><%= thread.thread %></textarea>
+
+         <textarea rows="4" cols="250" id="thread-textarea" name="thread"><%= thread.thread %></textarea>
           <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
           <input type="hidden" name="threadId" value="<%= thread._id %>"> <br />
           <button class="btn btn-info" aria-pressed="true">Submit </button>
       </form>
-      <button class="thread-close-button btn position-absolute btn-secondary" aria-pressed="true">Cancel</button>
+      <button class="thread-close-button btn btn-secondary" aria-pressed="true">Cancel</button>
     </div>
 
     <div>

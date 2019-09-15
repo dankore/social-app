@@ -293,7 +293,15 @@ textarea.tall-textarea {
   display: block;
   opacity: 1;
 }
+.thread-close-button{
+    position: absolute;
+    top: 76%;
+    left: 100px;
+}
 
+#thread-textarea {
+    width: 100%;
+}
 
 .chat-title-bar {
   background-color: #292929;
