@@ -9,11 +9,3 @@ MongoClient.connect(process.env.CONNECTIONSTRING, { useNewUrlParser: true, useUn
     app.listen(process.env.PORT);
   })
   .catch(err => console.error(err));
-
-// MongoClient.connect(process.env.CONNECTIONSTRING, { useNewUrlParser: true }, (err, client) => {
-//     // Return db object
-//     module.exports = client.db()
-//     const app = require('./app')
-//     app.listen(process.env.PORT)
-
-// })
