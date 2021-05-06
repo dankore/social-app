@@ -31,7 +31,7 @@
     "md5": "^2.2.1",
     "mongodb": "^3.3.0",
     "nodemon": "^1.19.1",
-    "sanitize-html": "^1.20.1",
+    "sanitize-html": "^2.3.2",
     "scroll-to-element": "^2.0.3",
     "socket.io": "^2.2.0",
     "validator": "^11.1.0",
