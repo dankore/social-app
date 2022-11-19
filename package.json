@@ -34,7 +34,7 @@
     "sanitize-html": "^1.20.1",
     "scroll-to-element": "^2.0.3",
     "socket.io": "^2.2.0",
-    "validator": "^11.1.0",
+    "validator": "^13.7.0",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.12"
   }
